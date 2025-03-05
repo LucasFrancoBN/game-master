@@ -5,7 +5,7 @@
   <a href="#descrição-do-projeto">Descrição do projeto</a> -
   <a href="#documentação-completa">Documentação completa</a> -
   <a href="#arquitetura">Arquitetura</a> - 
-  <a href="#diagrama-entidade-relacionamento">Diagrama Entidade-relacionamento</a> -
+  <a href="#diagrama-entidade-relacionamento">Diagrama Entidade-Relacionamento</a> -
   <a href="#diagramas-de-caso-de-uso">Diagrama de caso de uso</a> -
   <a href="#guia-de-implantação">Guia de implantação</a> -
   <a href="#desenvolvedores">Desenvolvedores</a>
@@ -57,7 +57,7 @@ A imagem a seguir representa toda a estrutura do banco de dados:
 ![Diagrama do projeto](readme-img/der.png)
 
 ## Diagramas de caso de uso
-A Seguir estão os diagramas de caso de uso:
+A seguir estão os diagramas de caso de uso:
 ![Diagrama caso de uso - game master manager](readme-img/caso-de-uso-gmm.png)
 ![Diagrama caso de uso - game master](readme-img/caso-de-uso-gm.png)
 
