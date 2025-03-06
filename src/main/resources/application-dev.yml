@@ -7,13 +7,11 @@ spring:
   sql:
     init:
       mode: always
-
   # Configuração do H2
   h2:
     console:
       path: /h2-console
       enabled: true
-
   # JPA e SQL
   jpa:
     show-sql: true

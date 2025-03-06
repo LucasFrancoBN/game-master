@@ -2,4 +2,4 @@ spring:
   application:
     name: gamemaster
   profiles:
-    active: dev
+    active: homolog

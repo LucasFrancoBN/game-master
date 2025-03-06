@@ -8,6 +8,7 @@ import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.user.response.
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/gamemaster/api/v1/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final DeleteUser deleteUser;
     private final GetMe getMe;
@@ -24,6 +26,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Void> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+        log.info("Starting register of user: {}", request);
         registerUser.register(request.email(), passwordEncoder.encode(request.password()), request.authorityName());
 
         return ResponseEntity.noContent().build();
@@ -31,6 +34,7 @@ public class UserController {
 
     @PatchMapping
     public ResponseEntity<Void> updatePassword(@Valid @RequestBody UpdatePasswordRequest request) {
+        log.info("Starting Update password for user: {}", request.email());
         updatePassword.update(request.email(), passwordEncoder.encode(request.password()));
 
         return ResponseEntity.noContent().build();
@@ -38,6 +42,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserResponse> getMe() {
+        log.info("Starting get me");
         User user = getMe.get();
 
         return ResponseEntity.ok(UserMapper.toResponse(user));
@@ -45,6 +50,7 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser() {
+        log.info("Starting delete user");
         deleteUser.delete();
 
         return ResponseEntity.noContent().build();

@@ -1,0 +1,31 @@
+services:
+  app-game-master:
+    image: 'game-master:dev'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: game-master
+    depends_on:
+      - db-game-master
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=game-master-db
+      - DB_PORT=5432
+      - DB_NAME=game-master
+      - DB_USERNAME=toor
+      - DB_PASSWORD=pass@123
+  db-game-master:
+    image: postgres
+    container_name: game-master-db
+    environment:
+      POSTGRES_USER: toor
+      POSTGRES_PASSWORD: pass@123
+      POSTGRES_DB: game-master
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

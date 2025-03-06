@@ -21,8 +21,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtCustomAuthenticationFilter extends OncePerRequestFilter {
-    private GetUserByEmail getUserByEmail;
-    private UserMapper mapper;
+    private final GetUserByEmail getUserByEmail;
 
     @Override
     protected void doFilterInternal(
@@ -45,7 +44,7 @@ public class JwtCustomAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserEntity entity = mapper.toEntity(user);
+        UserEntity entity = UserMapper.toEntity(user);
 
         Authentication auth = new CustomAuthentication(entity);
         SecurityContextHolder.getContext().setAuthentication(auth);

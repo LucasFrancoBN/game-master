@@ -31,7 +31,7 @@ public class ResourceServer {
                 // Estamos falando que todas requisições devem ser autenticadas.
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers("/login").permitAll();
-                    authorizeRequests.requestMatchers(HttpMethod.POST, "/gamemaster/api/v1/usuarios").permitAll();
+                    authorizeRequests.requestMatchers(HttpMethod.POST, "/gamemaster/api/v1/users").permitAll();
 
                     authorizeRequests.anyRequest().authenticated();
                 })
