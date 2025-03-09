@@ -2,4 +2,13 @@ spring:
   application:
     name: gamemaster
   profiles:
-    active: homolog
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 25MB
+
+app:
+  upload:
+    dir: ${UPLOAD_DIR:./backend/opt/uploads}
+    allowed-extensions: jpg,jpeg,png,webp
