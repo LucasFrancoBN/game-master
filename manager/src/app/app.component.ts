@@ -4,11 +4,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {GameMasterSvgComponent} from './components/svg/game-master-svg/game-master-svg.component';
+import {SidebarComponent} from './components/sidebar/sidebar.component';
 
 @Component({
   standalone: true,
   selector: 'app-root',
-  imports: [RouterOutlet, NzIconModule, NzLayoutModule, NzMenuModule,GameMasterSvgComponent, RouterLink],
+  imports: [RouterOutlet, NzIconModule, NzLayoutModule, NzMenuModule, SidebarComponent],
   templateUrl: './app.component.html'
 })
 export class AppComponent {

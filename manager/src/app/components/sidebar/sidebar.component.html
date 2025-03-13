@@ -1,0 +1,19 @@
+<div class="flex items-center bg-slate-900 h-16 pl-6 overflow-hidden transition-all duration-300">
+  <a class="flex items-center gap-2" routerLink="/" target="_blank">
+    <app-game-master-svg [size]="32" />
+    @if (!isCollapsed) {
+      <h1 class="text-white! font-secondary text-sm overflow-hidden whitespace-nowrap">
+        Game Master Manager
+      </h1>
+    }
+  </a>
+</div>
+<ul nz-menu nzTheme="dark" class="bg-slate-900!" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+  <li nz-submenu nzOpen nzTitle="Produtos" nzIcon="tags">
+    <ul>
+      <li nz-menu-item nzMatchRouter>
+        <a class="flex gap-2 items-center" routerLink="/cadastrar-produto"> <nz-icon nzType="upload" nzTheme="outline" /> Cadastrar produto</a>
+      </li>
+    </ul>
+  </li>
+</ul>
