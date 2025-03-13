@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --font-secondary: "Bungee", sans-serif;
+  --animate-revealText: revealText 30s forwards;
+
+  @keyframes revealText {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
