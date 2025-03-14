@@ -3,6 +3,7 @@ import {GameMasterSvgComponent} from '../svg/game-master-svg/game-master-svg.com
 import {NzIconDirective} from 'ng-zorro-antd/icon';
 import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from 'ng-zorro-antd/menu';
 import {RouterLink} from '@angular/router';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,6 +12,7 @@ import {RouterLink} from '@angular/router';
     NzIconDirective,
     NzMenuDirective,
     NzMenuItemComponent,
+    NzAvatarModule,
     NzSubMenuComponent,
     RouterLink
   ],

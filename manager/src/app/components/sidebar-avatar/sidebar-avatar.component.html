@@ -1,0 +1,17 @@
+<div class="pl-6">
+  <nz-avatar-group class="flex items-center gap-2 mb-2">
+    <nz-avatar nzIcon="user"></nz-avatar>
+    @if (!isCollapsed) {
+      <span class="text-neutral-100">Login</span>
+    }
+  </nz-avatar-group>
+  @if (!isCollapsed) {
+    <span class="block text-xs text-slate-700 pb-2 overflow-hidden whitespace-nowrap">
+            Game Master Manager &copy;
+    </span>
+  } @else {
+    <span class="block text-xs text-slate-700 pb-2 overflow-hidden whitespace-nowrap">
+            GMM &copy;
+    </span>
+  }
+</div>

@@ -1,12 +1,15 @@
 <nz-layout class="h-screen flex">
-  <nz-sider class="relative z-10 min-h-screen shadow-[2px_0_6px_rgba(0,21,41,.35)] bg-slate-900!"
+  <nz-sider class="min-h-screen shadow-[2px_0_6px_rgba(0,21,41,.35)] bg-slate-900!"
             nzCollapsible
             nzWidth="256px"
             nzBreakpoint="md"
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null"
   >
-    <app-sidebar [isCollapsed]="isCollapsed" />
+    <div class="h-full flex flex-col justify-between">
+      <app-sidebar [isCollapsed]="isCollapsed" />
+      <app-sidebar-avatar [isCollapsed]="isCollapsed" />
+    </div>
   </nz-sider>
   <nz-layout>
     <nz-header class="p-0! w-full! z-[2]!">
@@ -17,7 +20,7 @@
       </div>
     </nz-header>
     <nz-content class="m-6">
-      <div class="p-6 bg-white h-full">
+      <div class="p-6 bg-white h-full overflow-auto">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
