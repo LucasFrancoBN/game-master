@@ -2,7 +2,9 @@
   <nz-avatar-group class="flex items-center gap-2 mb-2">
     <nz-avatar nzIcon="user"></nz-avatar>
     @if (!isCollapsed) {
-      <span class="text-neutral-100">Login</span>
+      <a [href]="'http://localhost:8080/oauth2/authorize?response_type=code&client_id='+ environment.client_id +'&redirect_uri=' + environment.redirect_uri">
+        <span class="text-neutral-100">Login</span>
+      </a>
     }
   </nz-avatar-group>
   @if (!isCollapsed) {

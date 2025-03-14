@@ -1,0 +1,8 @@
+<div>
+  <nz-avatar-group class="flex items-center gap-2">
+    <nz-avatar nzIcon="user"></nz-avatar>
+    <a [href]="'http://localhost:8080/oauth2/authorize?response_type=code&client_id='+ environment.client_id +'&redirect_uri=' + environment.redirect_uri">
+      <span class="text-slate-700">Login</span>
+    </a>
+  </nz-avatar-group>
+</div>

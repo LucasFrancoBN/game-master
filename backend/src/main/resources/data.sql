@@ -29,4 +29,4 @@ INSERT INTO gm_client (id, client_id, client_secret, redirect_uri, scope) VALUES
 
 -- secret game_master_manager_secret
 INSERT INTO gm_client (id, client_id, client_secret, redirect_uri, scope) VALUES
-    ('17da6405-f24b-4836-9ef2-d923e8f10b86', 'game_master_manager', '$2a$12$7SAqKygleu2avmnR5.Q8j.UfJbhf1uvvPv.Pi4iO8qB.zfUfF91wy', 'http://localhost:4200', 'read write');
+    ('17da6405-f24b-4836-9ef2-d923e8f10b86', 'game_master_manager', '$2a$12$7SAqKygleu2avmnR5.Q8j.UfJbhf1uvvPv.Pi4iO8qB.zfUfF91wy', 'http://localhost:4200/auth', 'read write');
