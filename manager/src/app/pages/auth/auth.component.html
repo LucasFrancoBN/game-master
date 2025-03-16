@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-3 justify-center items-center h-full w-full">
+    @if(loading) {
+        <span nz-icon class="text-4xl" [nzType]="'loading'" [nzTheme]="'outline'"></span>
+        <span>Fazendo autenticação do sistema...</span>
+    }
+    @if(!loading && error) {
+        <nz-alert
+        class="absolute right-3 top-3 z-10 animate-to-down"
+        nzBanner
+        nzType="error"
+        nzMessage="Erro"
+        [nzDescription]="error"
+        nzCloseable
+      ></nz-alert>
+    }
+</div>

@@ -4,6 +4,16 @@
 @theme {
   --font-secondary: "Bungee", sans-serif;
   --animate-revealText: revealText 30s forwards;
+  --animate-to-down: toDown .3s forwards;
+
+  @keyframes toDown {
+    from {
+      transform: translateY(-12px);
+    }
+    to {
+      transform: translateY(0px)
+    }
+  }
 
   @keyframes revealText {
     from {
