@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Observable, shareReplay, tap} from 'rxjs';
+import {BehaviorSubject, Observable, shareReplay, tap} from 'rxjs';
 import {IAccessTokenModel} from '../models/access-token.model';
+import { IUserResponse } from '../models/user-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthService {
     refreshToken: 'refresh_token',
     expiresIn: 'expires_in'
   };
+  private authState = new BehaviorSubject<boolean>(this.hasValidToken());
   private readonly basicAuthHeader = `Basic ${btoa(`${environment.client_id}:${environment.client_secret}`)}`;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -40,9 +42,7 @@ export class AuthService {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }
-    ).pipe(
-      tap(token => this.storeToken(token)),
-    );
+    ).pipe(tap(token => this.storeToken(token)));
   }
 
   private getTokenRequestBody(grantType: string, params: Record<string, string>) {
@@ -58,13 +58,54 @@ export class AuthService {
     localStorage.setItem(this.AUTH_STORAGE_KEYS.accessToken, token.access_token);
     localStorage.setItem(this.AUTH_STORAGE_KEYS.refreshToken, token.refresh_token);
     localStorage.setItem(this.AUTH_STORAGE_KEYS.expiresIn, `${Date.now() + token.expires_in * 1000}`);
+    this.authState.next(true)
+  }
+
+  private hasValidToken() {
+    const expiresIn = localStorage.getItem(this.AUTH_STORAGE_KEYS.expiresIn);
+    return !!expiresIn && parseInt(expiresIn, 10) > Date.now()
+  }
+
+  isAuthenticated() {
+    return this.authState.asObservable();
   }
 
   logout() {
+    const token = localStorage.getItem(this.AUTH_STORAGE_KEYS.accessToken);
+  
+    if (!token) {
+      this.clearSession();
+      return;
+    }
+  
+    this.http.post(
+      `${environment.authUrl}/oauth2/revoke`,
+      new HttpParams().set("token", token),
+      {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      }
+    ).subscribe({
+      next: () => this.finalizeLogout(),
+      error: () => this.finalizeLogout()
+    });
+  }
+
+  private finalizeLogout() {
+    this.http.get(`${environment.authUrl}/oauth2/logout`).subscribe({
+      next: () => this.clearSession(),
+      error: () => this.clearSession()
+    });
+  }
+
+  private clearSession() {
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.accessToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.refreshToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.expiresIn);
-
+    this.authState.next(false);
     this.router.navigate(['/']);
+  }
+
+  getMe() {
+    return this.http.get<IUserResponse>(`${environment.authUrl}/gamemaster/api/v1/users`);
   }
 }

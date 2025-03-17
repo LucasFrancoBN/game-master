@@ -24,3 +24,9 @@
     }
   }
 }
+
+@layer components {
+  .title {
+    @apply text-4xl font-secondary text-slate-900;
+  }
+}

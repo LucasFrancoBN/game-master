@@ -129,7 +129,7 @@ public class AuthorizationServer {
                 // para consultar status do token
                 .tokenIntrospectionEndpoint("/oauth2/introspect")
                 // Revogar token
-                .tokenRevocationEndpoint("oauth2/revoke")
+                .tokenRevocationEndpoint("/oauth2/revoke")
                 // Utilizado para pegar o authorization code
                 .authorizationEndpoint("/oauth2/authorize")
                 // informações do usuário OpenID Connect

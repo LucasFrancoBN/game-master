@@ -16,8 +16,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     NzSubMenuComponent,
     RouterLink
   ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
   @Input() public isCollapsed!: boolean;

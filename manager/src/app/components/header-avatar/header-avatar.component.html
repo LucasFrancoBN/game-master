@@ -1,8 +1,23 @@
 <div>
-  <nz-avatar-group class="flex items-center gap-2">
-    <nz-avatar nzIcon="user"></nz-avatar>
-    <a [href]="'http://localhost:8080/oauth2/authorize?response_type=code&client_id='+ environment.client_id +'&redirect_uri=' + environment.redirect_uri">
-      <span class="text-slate-700">Login</span>
-    </a>
+  <nz-avatar-group>
+    @if(logged) {
+      <div class="flex! items-center gap-2 cursor-pointer" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="menu">
+        <nz-avatar [nzText]="firstLetter" class="text-green-700! bg-green-200!"></nz-avatar>
+        <span class="block text-slate-700">{{firstPartOfEmail}}</span>
+        <nz-icon nzType="down" />
+      </div>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="handleLogout()"><nz-icon nzType="logout" nzTheme="outline" /> Logout</li>
+        </ul>
+      </nz-dropdown-menu>
+    } @else {
+      <div class="flex! items-center gap-2">
+        <nz-avatar nzIcon="user"></nz-avatar>
+        <a [href]="'http://localhost:8080/oauth2/authorize?response_type=code&client_id='+ environment.client_id +'&redirect_uri=' + environment.redirect_uri">
+          <span class="text-slate-700">Login</span>
+        </a>
+      </div>
+    }
   </nz-avatar-group>
 </div>

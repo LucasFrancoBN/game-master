@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import {inject} from '@angular/core';
 import {AuthService} from '../services/auth.service';
 
-export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
 
   const accessToken = localStorage.getItem('access_token');
@@ -11,6 +11,7 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
 
   if(!accessToken || !refreshToken || !expiresIn)
     return next(req);
+
 
   if(Number(expiresIn) - Date.now() >= 0) {
     authService.handleRefreshToken(refreshToken).pipe();

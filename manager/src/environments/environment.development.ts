@@ -6,6 +6,6 @@ export const environment = {
     authUrl: "http://localhost:8080",
     client_id: "game_master_manager",
     client_secret: "game_master_manager_secret",
-    redirect_uri: "http%3A%2F%2Flocalhost%3A4200%2Fauth",
+    redirect_uri: "http://localhost:4200/auth",
     scope: "read write",
 };
