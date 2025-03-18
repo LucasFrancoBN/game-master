@@ -3,8 +3,8 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, shareReplay, tap} from 'rxjs';
-import {IAccessTokenModel} from '../models/access-token.model';
-import { IUserResponse } from '../models/user-response.model';
+import { IUserResponse } from '../models/auth/user-response.model';
+import { IAccessTokenModel } from '../models/auth/access-token.model';
 
 @Injectable({
   providedIn: 'root'
