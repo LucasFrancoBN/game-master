@@ -8,9 +8,11 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { InputComponent } from "../../../components/input/input.component";
 import { SelectComponent } from "../../../components/select/select.component";
-import { statusTranslations } from '../../../utils/product-status.utils';
+import { convertStatusToEnglish, statusTranslations } from '../../../utils/product-status.utils';
 import { UploadComponent } from "../../../components/upload/upload.component";
 import { ButtonComponent } from "../../../components/button/button.component";
+import { RegisterProductService } from '../../../core/services/product/register-product.service';
+import { IRegisterProduct } from '../../../core/models/product/register-product.model';
 
 @Component({
   selector: 'app-cadastrar-produto',
@@ -19,8 +21,9 @@ import { ButtonComponent } from "../../../components/button/button.component";
 })
 export class CadastrarProdutoComponent {
   private fb = inject(NonNullableFormBuilder);
+  private registerProductService = inject(RegisterProductService);
   options = Object.values(statusTranslations);
-  photoList: ArrayBuffer[] = [];
+  photoList: File[] = [];
 
   productForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(5)]],
@@ -45,15 +48,22 @@ export class CadastrarProdutoComponent {
     return '';
   }
   
+  get invalidForm() {
+    return this.productForm.invalid || !this.photoList.length; 
+  }
 
   onSubmit() {
-    if (this.productForm.invalid || !this.photoList.length) {
-      console.log(this.productForm)
-      console.log("Inválido");
+    if (this.invalidForm) {
+      this.productForm.markAllAsTouched();
       return;
     }
-    console.log(this.productForm.invalid)
-    console.log(this.productForm);
-    console.log(this.photoList);
+
+    const productData: IRegisterProduct = this.productForm.getRawValue() as IRegisterProduct;
+    productData.status = convertStatusToEnglish(productData.status);
+    
+    this.registerProductService.registerProduct(productData, this.photoList).subscribe({
+      next: () => console.log("Produto salvo com sucesso!"),
+      error: (e) => console.log("Erro ao salvar produto", e)
+    })
   }
 }

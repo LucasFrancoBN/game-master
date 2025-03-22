@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, shareReplay, tap} from 'rxjs';
-import { IUserResponse } from '../models/auth/user-response.model';
-import { IAccessTokenModel } from '../models/auth/access-token.model';
+import { IAccessTokenModel } from '../../models/auth/access-token.model';
+import { IUserResponse } from '../../models/auth/user-response.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  handleAccessToken(code: string): Observable<any> {
+  handleAccessToken(code: string): Observable<IAccessTokenModel> {
     return this.requestToken(
       this.getTokenRequestBody(environment.grant_type.code, {code, redirect_uri: environment.redirect_uri})
     )

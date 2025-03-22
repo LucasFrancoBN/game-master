@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-auth',

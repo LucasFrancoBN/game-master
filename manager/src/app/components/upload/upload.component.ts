@@ -13,7 +13,7 @@ import { getBase64, getBinary } from '../../utils/upload.utils';
 })
 export class UploadComponent {
   @Input() class = "";
-  @Input() fileList!: ArrayBuffer[];
+  @Input() fileList!: File[];
   previewImage: string | undefined = '';
   previewVisible = false;
 
@@ -33,23 +33,19 @@ export class UploadComponent {
   };
 
   async handleChange({file}: NzUploadChangeParam) {
-    const binary = await getBinary(file.originFileObj!);
-
-    if(!(binary instanceof ArrayBuffer)) {
-      console.error(binary);
+    if(!file.originFileObj) {
+      console.error('File does not exists');
       return;
     }
 
-    const binaryString = JSON.stringify([...new Uint8Array(binary)]);
+    const fileExists = file.originFileObj;
 
     const alreadyExists = this.fileList.some(existingFile => 
-      JSON.stringify([...new Uint8Array(existingFile)]) === binaryString
+      existingFile.name === fileExists.name
     );
-    
-    console.log(alreadyExists)
   
     if (!alreadyExists) {
-      this.fileList.push(binary);
+      this.fileList.push(fileExists);
     }
   }
 }

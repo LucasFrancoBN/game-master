@@ -1,8 +1,8 @@
 import {Component, inject, Input} from '@angular/core';
 import {NzAvatarComponent, NzAvatarGroupComponent} from "ng-zorro-antd/avatar";
 import {environment} from '../../../environments/environment';
-import { AuthService } from '../../core/services/auth.service';
 import { takeUntil, filter, switchMap, Subject, tap } from 'rxjs';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar-avatar',

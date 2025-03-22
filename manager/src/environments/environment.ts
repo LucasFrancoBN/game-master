@@ -8,4 +8,5 @@ export const environment = {
   client_secret: "game_master_manager_secret",
   redirect_uri: "http://localhost:4200/auth",
   scope: "read write",
+  hostUrl: "http://localhost:8080"
 };

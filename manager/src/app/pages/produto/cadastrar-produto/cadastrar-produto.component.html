@@ -10,7 +10,7 @@
     </div>
     <app-input class="mb-3" [type]="'textarea'" [label]="'Descrição'" [id]="'description'" [control]="productForm.get('description')!" [errorTip]="getError('description')" />
     <app-upload class="mb-3" [fileList]="photoList" />
-    <app-button>
+    <app-button [disabled]="invalidForm">
         <span text class="block! font-secondary text-lg">Cadastrar</span>
     </app-button>
 </form>
