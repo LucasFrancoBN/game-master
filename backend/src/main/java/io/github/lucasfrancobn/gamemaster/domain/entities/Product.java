@@ -1,7 +1,6 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
-import io.github.lucasfrancobn.gamemaster.domain.entities.validation.product.ListImagesValidator;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

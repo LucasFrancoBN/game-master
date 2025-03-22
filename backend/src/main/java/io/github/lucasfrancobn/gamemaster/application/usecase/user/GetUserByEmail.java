@@ -4,8 +4,6 @@ import io.github.lucasfrancobn.gamemaster.application.gateway.UserRepository;
 import io.github.lucasfrancobn.gamemaster.domain.entities.User;
 import io.github.lucasfrancobn.gamemaster.domain.entities.validation.user.EmailValidator;
 
-import java.util.Optional;
-
 public class GetUserByEmail {
     private final UserRepository repository;
 

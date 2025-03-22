@@ -3,7 +3,6 @@ package io.github.lucasfrancobn.gamemaster.infra.persistence.repository;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

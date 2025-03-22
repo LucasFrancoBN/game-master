@@ -4,8 +4,6 @@ import io.github.lucasfrancobn.gamemaster.application.gateway.UserRepository;
 import io.github.lucasfrancobn.gamemaster.domain.entities.User;
 import io.github.lucasfrancobn.gamemaster.domain.services.AuthService;
 
-import java.util.UUID;
-
 public class DeleteUser {
     private static  final String UNABLE_DEACTIVATE_USER = "Unable deactivate user.";
     private final UserRepository repository;

@@ -2,8 +2,6 @@ package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
 
-import java.util.UUID;
-
 public class Image {
     private String name;
     private String path;

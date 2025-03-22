@@ -2,7 +2,6 @@ package io.github.lucasfrancobn.gamemaster.application.gateway;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.User;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 

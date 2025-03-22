@@ -2,10 +2,8 @@ package io.github.lucasfrancobn.gamemaster.infra.config.security.server;
 
 import io.github.lucasfrancobn.gamemaster.infra.config.security.filter.JwtCustomAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
