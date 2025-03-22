@@ -1,1 +1,16 @@
-<h1 class="title">Cadastrar produto</h1>
+<h1 class="title mb-3!">Cadastrar produto</h1>
+<form nz-form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-2 gap-3 mb-2">
+        <app-input [label]="'Nome'" [id]="'name'" [control]="productForm.get('name')!" [errorTip]="getError('name')" />
+        <app-select [label]="'Status'" [id]="'status'" [options]="options" [control]="productForm.get('status')!" [errorTip]="getError('status')" />
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-2">
+        <app-input [type]="'number'" [label]="'Preço'" [id]="'price'" [control]="productForm.get('price')!" [errorTip]="getError('price')" />
+        <app-input [label]="'Peso'" [id]="'weight'" [control]="productForm.get('weight')!" [errorTip]="getError('weight')" />
+    </div>
+    <app-input class="mb-3" [type]="'textarea'" [label]="'Descrição'" [id]="'description'" [control]="productForm.get('description')!" [errorTip]="getError('description')" />
+    <app-upload class="mb-3" [fileList]="photoList" />
+    <app-button>
+        <span text class="block! font-secondary text-lg">Cadastrar</span>
+    </app-button>
+</form>

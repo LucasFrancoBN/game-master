@@ -1,0 +1,15 @@
+<div [attr.class]="class">
+    <nz-upload nzType="drag" nzListType="picture-card" [nzMultiple]="true" [nzPreview]="handlePreview" (nzChange)="handleChange($event)">
+        <p class="ant-upload-drag-icon">
+            <nz-icon nzType="inbox" />
+        </p>
+        <p class="ant-upload-text">Clique aqui ou arraste as imagens do produto.</p>
+        <p class="ant-upload-hint">Você pode cadastrar até 5 imagens para um mesmo produto.</p>
+    </nz-upload>
+    
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+        <ng-template #modalContent>
+            <img [src]="previewImage" class="w-full">
+        </ng-template>
+    </nz-modal>
+</div>

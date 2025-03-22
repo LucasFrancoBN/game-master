@@ -1,0 +1,12 @@
+<div>
+    <nz-form-item class="mb-0!">
+        <nz-form-label class="pb-0! -mb-0.5" nzNoColon="true" nzSpan="24">{{label}}</nz-form-label>
+        <nz-form-control [nzValidateStatus]="hasError ? 'error' : ''"  nzHasFeedback [nzErrorTip]="errorTip">
+            <nz-select [formControl]="formControl" nzPlaceHolder="Escolha" class="w-full!">
+                @for (option of options; track $index) {
+                    <nz-option [nzValue]="option" [nzLabel]="option"></nz-option>
+                }
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+</div>
