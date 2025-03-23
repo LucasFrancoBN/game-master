@@ -30,3 +30,53 @@ INSERT INTO gm_client (id, client_id, client_secret, redirect_uri, scope) VALUES
 -- secret game_master_manager_secret
 INSERT INTO gm_client (id, client_id, client_secret, redirect_uri, scope) VALUES
     ('17da6405-f24b-4836-9ef2-d923e8f10b86', 'game_master_manager', '$2a$12$7SAqKygleu2avmnR5.Q8j.UfJbhf1uvvPv.Pi4iO8qB.zfUfF91wy', 'http://localhost:4200/auth', 'read write');
+
+
+-- PRODUCT
+INSERT INTO PRODUCT (id, price, weight, name, status, description) 
+VALUES (
+    '94f9acde-2d9a-4507-9995-c16bf1036808', 
+    200, 
+    500, 
+    'Teclado Gamer Mecânico', 
+    'AVAILABLE', 
+    'Teclado Gamer Mecânico RGB – Alta Performance para Jogos  
+
+    Desempenho máximo para gamers exigentes! O Teclado Gamer Mecânico RGB foi projetado para proporcionar velocidade, precisão e conforto em cada jogada. Com switches mecânicos de alta durabilidade, iluminação RGB personalizável e tecnologia anti-ghosting, ele garante respostas rápidas e um visual incrível para o seu setup.  
+
+    Destaques do produto:  
+    - Switches mecânicos para sensação tátil aprimorada e resposta ultra rápida  
+    - Iluminação RGB personalizável com diversos modos e cores  
+    - Tecnologia anti-ghosting e N-Key Rollover para pressionar várias teclas ao mesmo tempo sem falhas  
+    - Estrutura resistente e construção robusta para maior durabilidade  
+    - Teclas programáveis para configuração de atalhos e macros  
+    - Compatibilidade universal com Windows, macOS e consoles via conexão USB  
+
+    Especificações:  
+    - Conectividade: USB 2.0 / 3.0  
+    - Dimensões: [Insira dimensões aqui]  
+    - Peso: [Insira peso aqui]  
+
+    Aprimore sua jogabilidade e domine cada partida com o melhor teclado gamer!  
+
+    Compre agora e leve sua experiência gamer para o próximo nível!'
+);
+
+
+-- IMAGES
+INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
+VALUES (11813257216, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-996-$2054-bc1e.webp', '20250323-125454-996-$2054-bc1e.webp', 'WEBP');
+
+INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
+VALUES (12046041088, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-994-$1721-7a3a.webp', '20250323-125454-994-$1721-7a3a.webp', 'WEBP');
+
+INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
+VALUES (14986248192, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-992-$2964-74da.webp', '20250323-125454-992-$2964-74da.webp', 'WEBP');
+
+INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
+VALUES (2136997888, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-991-$6415-14ea.webp', '20250323-125454-991-$6415-14ea.webp', 'WEBP');
+
+INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
+VALUES (10701766656, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-748-$1901-ba29.webp', '20250323-125454-748-$1901-ba29.webp', 'WEBP');
+
+

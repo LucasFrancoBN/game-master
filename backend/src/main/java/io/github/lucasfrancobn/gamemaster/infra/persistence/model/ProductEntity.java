@@ -17,6 +17,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
+    @Lob
     private String description;
     private BigDecimal price;
     private Long weight;
