@@ -17,8 +17,6 @@ export class UploadComponent {
   previewImage: string | undefined = '';
   previewVisible = false;
 
-  private messageService = inject(NzMessageService);
-
   handlePreview = async (file: NzUploadFile): Promise<void> => {
     const url = await getBase64(file.originFileObj!);
     

@@ -4,6 +4,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { InputComponent } from "../../../components/input/input.component";
@@ -13,15 +14,34 @@ import { UploadComponent } from "../../../components/upload/upload.component";
 import { ButtonComponent } from "../../../components/button/button.component";
 import { RegisterProductService } from '../../../core/services/product/register-product.service';
 import { IRegisterProduct } from '../../../core/models/product/register-product.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { LoadingComponent } from "../../../components/loading/loading.component";
+
+
 
 @Component({
   selector: 'app-cadastrar-produto',
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule, InputComponent, SelectComponent, UploadComponent, ButtonComponent],
+  imports: [
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzAlertModule,
+    InputComponent,
+    SelectComponent,
+    UploadComponent,
+    ButtonComponent,
+    LoadingComponent
+],
   templateUrl: './cadastrar-produto.component.html'
 })
 export class CadastrarProdutoComponent {
   private fb = inject(NonNullableFormBuilder);
   private registerProductService = inject(RegisterProductService);
+  private message = inject(NzMessageService);
+
+  loading = false;
+  errorMessage = "";
   options = Object.values(statusTranslations);
   photoList: File[] = [];
 
@@ -53,6 +73,8 @@ export class CadastrarProdutoComponent {
   }
 
   onSubmit() {
+    this.errorMessage = "";
+
     if (this.invalidForm) {
       this.productForm.markAllAsTouched();
       return;
@@ -60,10 +82,20 @@ export class CadastrarProdutoComponent {
 
     const productData: IRegisterProduct = this.productForm.getRawValue() as IRegisterProduct;
     productData.status = convertStatusToEnglish(productData.status);
-    
+    this.loading = true;
+
     this.registerProductService.registerProduct(productData, this.photoList).subscribe({
-      next: () => console.log("Produto salvo com sucesso!"),
-      error: (e) => console.log("Erro ao salvar produto", e)
+      next: () => {
+        this.productForm.reset();
+        this.photoList = [];
+        this.message.success("Produto criado com sucesso");
+      },
+      error: (e: Error) => {
+        this.errorMessage = e.message;
+      },
+      complete: () => {
+        this.loading = false;
+      }
     })
   }
 }

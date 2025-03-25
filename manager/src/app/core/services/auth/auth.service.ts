@@ -101,11 +101,25 @@ export class AuthService {
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.accessToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.refreshToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.expiresIn);
+    document.cookie = ""
     this.authState.next(false);
     this.router.navigate(['/']);
   }
 
   getMe() {
     return this.http.get<IUserResponse>(`${environment.authUrl}/gamemaster/api/v1/users`);
+  }
+
+  checkTokenExpiration() {
+    const expiresIn = localStorage.getItem(this.AUTH_STORAGE_KEYS.expiresIn);
+
+    if(!expiresIn) return;
+
+    const expirationTime = parseInt(expiresIn);
+    const currentTime = Date.now();
+
+    if(expirationTime >= currentTime) return;
+
+
   }
 }
