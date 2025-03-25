@@ -61,22 +61,3 @@ VALUES (
 
     Compre agora e leve sua experiência gamer para o próximo nível!'
 );
-
-
--- IMAGES
-INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
-VALUES (11813257216, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-996-$2054-bc1e.webp', '20250323-125454-996-$2054-bc1e.webp', 'WEBP');
-
-INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
-VALUES (12046041088, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-994-$1721-7a3a.webp', '20250323-125454-994-$1721-7a3a.webp', 'WEBP');
-
-INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
-VALUES (14986248192, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-992-$2964-74da.webp', '20250323-125454-992-$2964-74da.webp', 'WEBP');
-
-INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
-VALUES (2136997888, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-991-$6415-14ea.webp', '20250323-125454-991-$6415-14ea.webp', 'WEBP');
-
-INSERT INTO IMAGE (SIZE, PRODUCT_ID, PATH, NAME, TYPE) 
-VALUES (10701766656, '94f9acde-2d9a-4507-9995-c16bf1036808', '/home/lucas_fbn/projetos/game-master/backend/.backend/opt/uploads/20250323-125454-748-$1901-ba29.webp', '20250323-125454-748-$1901-ba29.webp', 'WEBP');
-
-

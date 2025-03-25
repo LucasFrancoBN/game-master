@@ -1,5 +1,5 @@
 <div [attr.class]="class">
-    <nz-upload nzType="drag" nzListType="picture-card" [nzMultiple]="true" [nzPreview]="handlePreview" (nzChange)="handleChange($event)">
+    <nz-upload nzType="drag" nzListType="picture-card" [nzMultiple]="true" [nzPreview]="handlePreview" [(nzFileList)]="nzFileList" (nzChange)="handleChange($event)">
         <p class="ant-upload-drag-icon">
             <nz-icon nzType="inbox" />
         </p>

@@ -82,7 +82,10 @@ export class AuthService {
       `${environment.authUrl}/oauth2/revoke`,
       new HttpParams().set("token", token),
       {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        headers: { 
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": this.basicAuthHeader
+        }
       }
     ).subscribe({
       next: () => this.finalizeLogout(),
@@ -101,7 +104,6 @@ export class AuthService {
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.accessToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.refreshToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.expiresIn);
-    document.cookie = ""
     this.authState.next(false);
     this.router.navigate(['/']);
   }
@@ -120,6 +122,8 @@ export class AuthService {
 
     if(expirationTime >= currentTime) return;
 
-
+    localStorage.removeItem(this.AUTH_STORAGE_KEYS.accessToken);
+    localStorage.removeItem(this.AUTH_STORAGE_KEYS.expiresIn);
+    localStorage.removeItem(this.AUTH_STORAGE_KEYS.refreshToken);
   }
 }

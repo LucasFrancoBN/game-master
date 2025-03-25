@@ -3,6 +3,8 @@ import {inject} from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  if(req.url.includes('revoke') || req.url.includes('logout')) return next(req);
+
   const authService = inject(AuthService);
 
   const accessToken = localStorage.getItem('access_token');

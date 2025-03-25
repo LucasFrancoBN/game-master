@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -11,11 +11,19 @@ import { getBase64, getBinary } from '../../utils/upload.utils';
   imports: [NzUploadModule, NzIconModule, NzModalModule],
   templateUrl: './upload.component.html'
 })
-export class UploadComponent {
+export class UploadComponent implements OnChanges {
   @Input() class = "";
   @Input() fileList!: File[];
+  nzFileList: NzUploadFile[] = [];
   previewImage: string | undefined = '';
   previewVisible = false;
+  removeFiles = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.fileList);
+    if(this.fileList.length === 0)
+      this.nzFileList = [];
+  }
 
   handlePreview = async (file: NzUploadFile): Promise<void> => {
     const url = await getBase64(file.originFileObj!);
