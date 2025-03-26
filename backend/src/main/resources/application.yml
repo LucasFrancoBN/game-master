@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: gamemaster
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 25MB
+
+app:
+  upload:
+    dir: ${UPLOAD_DIR:./backend/opt/uploads}
+    allowed-extensions: jpg,jpeg,png,webp
+  cors:
+    origins: http://localhost:4200,http://localhost:5173

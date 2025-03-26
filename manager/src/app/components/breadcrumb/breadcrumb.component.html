@@ -1,0 +1,14 @@
+<nz-breadcrumb class="mb-3!">
+    @for (route of routes; track $index) {
+        <nz-breadcrumb-item>
+            @if ($index === 0) {
+                <a routerLink="/">
+                    <nz-icon nzType="home" />
+                </a>
+            } @else {
+                <a [routerLink]="getBreadcrumbPath($index)">{{route}}</a>
+            }
+        </nz-breadcrumb-item>
+    }
+</nz-breadcrumb>
+

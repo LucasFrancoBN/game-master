@@ -1,0 +1,30 @@
+<nz-layout class="h-screen flex">
+  <nz-sider class="min-h-screen shadow-[2px_0_6px_rgba(0,21,41,.35)] bg-slate-900!"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null"
+  >
+    <div class="h-full flex flex-col justify-between">
+      <app-sidebar [isCollapsed]="isCollapsed" />
+      <app-sidebar-avatar [isCollapsed]="isCollapsed" />
+    </div>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="p-0! w-full! z-[2]!">
+      <div class="px-5 bg-white shadow-[0_1px_4px_rgba(0,21,41,0.08)] flex justify-between items-center">
+        <span class="text-xl cursor-pointer" (click)="isCollapsed = !isCollapsed">
+          <nz-icon class="hover:text-blue-400!" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        </span>
+        <app-header-avatar [isCollapsed]="isCollapsed" />
+      </div>
+    </nz-header>
+    <nz-content class="m-6">
+      <div class="p-6 bg-white h-full overflow-auto relative">
+        <app-breadcrumb />
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
