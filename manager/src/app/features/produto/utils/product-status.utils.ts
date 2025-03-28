@@ -1,4 +1,4 @@
-import {ProductStatus} from "../core/models/product/product-status.enum";
+import {ProductStatus} from "../models/product-status.enum";
 
 export const statusTranslations: Record<ProductStatus, string> = Object.freeze({
     [ProductStatus.AVAILABLE]: "Ativo",
