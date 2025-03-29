@@ -4,9 +4,9 @@ export const environment = {
     refresh_token: 'refresh_token',
   },
   authUrl: "http://localhost:8080",
-  client_id: "game_master_manager",
+  client_id: "game_master_manager_homolog",
   client_secret: "game_master_manager_secret",
-  redirect_uri: "http://localhost:4200/auth",
+  redirect_uri: "http://localhost:8082/auth",
   scope: "read write",
   hostUrl: "http://localhost:8080"
 };

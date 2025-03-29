@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import {inject} from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if(req.url.includes('revoke') || req.url.includes('logout')) return next(req);

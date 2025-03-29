@@ -1,10 +1,10 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {NzAvatarComponent, NzAvatarGroupComponent} from "ng-zorro-antd/avatar";
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import { filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 
 @Component({

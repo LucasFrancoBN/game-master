@@ -67,7 +67,7 @@ A imagem a seguir representa toda a estrutura do banco de dados:
 
 ## 5.1 Game Master Manager
 Game Master Manager é o sistema de gerenciamento do Ecommerce a ser desenvolvido. Nele, é possível controlar todas as operações do ecommerce, como gerenciar produtos, pedidos, promoções, usuários e acessos, transporte, entre muitas outras funcionalidades.
-Todo o sistema foi desenvolvido utilizando Angular. Veja mais [clicando aqui](./manager/README.md)
+Todo o sistema foi desenvolvido utilizando Angular. Veja a descrição completa do projeto [clicando aqui](./manager/README.md)
 
 ## 6. Ferramentas utilizadas
 <div style="display: flex; gap: 15px">
@@ -92,7 +92,11 @@ Todo o sistema foi desenvolvido utilizando Angular. Veja mais [clicando aqui](./
 </a>
 
 <a href="https://angular.dev/" target="_blank">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" width="40"/>
+    <img src="https://img.alicdn.com/imgextra/i1/O1CN01RSfkps1J0vtVaKr0U_!!6000000000967-49-tps-1920-1920.webp" width="40"/>
+</a>
+
+<a href="https://ng.ant.design/docs/introduce/en" target="_blank"> 
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/antdesign/antdesign-original.svg" alt="Ng Zorro" width="40" height="40"/> 
 </a>
 
 </div>

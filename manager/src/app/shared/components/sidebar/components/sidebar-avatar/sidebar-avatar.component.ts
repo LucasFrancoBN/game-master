@@ -1,8 +1,8 @@
 import {Component, inject, Input} from '@angular/core';
 import {NzAvatarComponent, NzAvatarGroupComponent} from "ng-zorro-antd/avatar";
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../../../environments/environment';
 import { takeUntil, filter, switchMap, Subject, tap } from 'rxjs';
-import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthService } from '../../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-sidebar-avatar',
@@ -21,8 +21,8 @@ export class SidebarAvatarComponent {
     firstLetter = "";
     firstPartOfEmail = "";
     logged = false;
-    
-    
+
+
   ngOnInit(): void {
     this.authService.isAuthenticated()
     .pipe(

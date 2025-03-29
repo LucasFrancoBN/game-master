@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {GameMasterSvgComponent} from '../../components/svg/game-master-svg/game-master-svg.component';
+import {GameMasterSvgComponent} from '../../../shared/components/svg/game-master-svg/game-master-svg.component';
 
 @Component({
   selector: 'app-home',

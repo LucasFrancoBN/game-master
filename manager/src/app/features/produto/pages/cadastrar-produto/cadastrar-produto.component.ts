@@ -7,16 +7,16 @@ import {
 
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { InputComponent } from "../../../components/input/input.component";
-import { SelectComponent } from "../../../components/select/select.component";
-import { convertStatusToEnglish, statusTranslations } from '../../../utils/product-status.utils';
-import { UploadComponent } from "../../../components/upload/upload.component";
-import { ButtonComponent } from "../../../components/button/button.component";
-import { RegisterProductService } from '../../../core/services/product/register-product.service';
-import { IRegisterProduct } from '../../../core/models/product/register-product.model';
+import { InputComponent } from "../../../../shared/components/input/input.component";
+import { SelectComponent } from "../../../../shared/components/select/select.component";
+import { convertStatusToEnglish, statusTranslations } from '../../utils/product-status.utils';
+import { UploadComponent } from "../../../../shared/components/upload/upload.component";
+import { ButtonComponent } from "../../../../shared/components/button/button.component";
+import { RegisterProductService } from '../../service/register-product.service'
+import { IRegisterProduct } from '../../models/register-product.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { LoadingComponent } from "../../../components/loading/loading.component";
+import { LoadingComponent } from "../../../../shared/components/loading/loading.component";
 
 
 
