@@ -5,7 +5,8 @@
 2. [Segurança](#2-segurança)
 3. [Arquitetura](#3-arquitetura)
 4. [Diagrama Entidade-Relacionamento](#4-diagrama-entidade-relacionamento)
-5. [Desenvolvedores](#5-desenvolvedores)
+5. [Funcionalidades Desenvolvidas](#5-funcionalidades-desenvolvidas)
+6. [Desenvolvedores](#6-desenvolvedores)
 
 ## 1. Descrição do projeto
 O backend do Game Master é responsável por toda a lógica de negócio da aplicação. Ele realiza a validação e persistência dos dados, garantindo a integridade e segurança das informações armazenadas no banco de dados.
@@ -70,7 +71,15 @@ Seguindo exatamente as necessidades dos usuários da aplicação, esse foi o Dia
 
 ![Diagrama do projeto](../readme-img/der.png)
 
-## 5. Desenvolvedores
+## 5. Funcionalidades Desenvolvidas
+Lista de funcionalidades desenvolvidas:
+- [x] Autenticação com Login e Senha utilizando Authorization Flow do protocolo OAuth2.
+- [x] CRUD de Usuários.
+- [x] CRUD de Clients.
+- [x] Cadastro de produto.
+- [x] Tarefa agendada para excluir todos as imagens orfãs do sistema.
+
+## 6. Desenvolvedores
 <table align="center">
   <tr>
     <td align="center">

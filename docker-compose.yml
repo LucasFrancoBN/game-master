@@ -1,8 +1,18 @@
 services:
+  app-game-master-manager:
+    image: 'game-master-manager:dev'
+    build:
+      context: manager
+      dockerfile: Dockerfile
+    container_name: game-master-manager
+    depends_on:
+      - app-game-master
+    ports:
+      - "8082:80"
   app-game-master:
     image: 'game-master:dev'
     build:
-      context: .
+      context: backend
       dockerfile: Dockerfile
     container_name: game-master
     depends_on:
