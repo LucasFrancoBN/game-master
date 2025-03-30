@@ -94,7 +94,7 @@ public class Product {
     }
 
     public void setDescription(String description) {
-        if(description.isBlank() || description.length() < 3 || description.length() > 500) {
+        if(description.isBlank() || description.length() < 30) {
             throw new IllegalArgumentException("Description must be between 3 and 500 characters");
         }
         this.description = description;
