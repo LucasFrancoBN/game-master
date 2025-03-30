@@ -36,13 +36,14 @@ INSERT INTO gm_client (id, client_id, client_secret, redirect_uri, scope) VALUES
 
 
 -- PRODUCT
-INSERT INTO PRODUCT (id, price, weight, name, status, description) 
+INSERT INTO PRODUCT (id, price, weight, name, status, amount, description)
 VALUES (
     '94f9acde-2d9a-4507-9995-c16bf1036808', 
     200, 
     500, 
     'Teclado Gamer Mecânico', 
-    'AVAILABLE', 
+    'AVAILABLE',
+    300,
     'Teclado Gamer Mecânico RGB – Alta Performance para Jogos  
 
     Desempenho máximo para gamers exigentes! O Teclado Gamer Mecânico RGB foi projetado para proporcionar velocidade, precisão e conforto em cada jogada. Com switches mecânicos de alta durabilidade, iluminação RGB personalizável e tecnologia anti-ghosting, ele garante respostas rápidas e um visual incrível para o seu setup.  
@@ -57,8 +58,8 @@ VALUES (
 
     Especificações:  
     - Conectividade: USB 2.0 / 3.0  
-    - Dimensões: [Insira dimensões aqui]  
-    - Peso: [Insira peso aqui]  
+    - Dimensões: 14cm de altura, 38.7cm de largura e 4.5cm de profundidade.
+    - Peso: 500g
 
     Aprimore sua jogabilidade e domine cada partida com o melhor teclado gamer!  
 

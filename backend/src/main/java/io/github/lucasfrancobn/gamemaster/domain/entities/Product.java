@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
+import io.github.lucasfrancobn.gamemaster.domain.entities.validation.product.ListImagesValidator;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Product {
     private UUID id;
     private String name;
     private String description;
+    private Integer amount;
     private BigDecimal price;
     private Long weight;
     private ProductStatus status;
@@ -25,7 +27,8 @@ public class Product {
             String description,
             BigDecimal price,
             Long weight,
-            ProductStatus status
+            ProductStatus status,
+            Integer amount
     ) {
         this.id = id;
         this.name = name;
@@ -33,20 +36,21 @@ public class Product {
         this.price = price;
         this.weight = weight;
         this.status = status;
+        this.amount = amount;
     }
 
-    public Product(String name, String description, BigDecimal price, Long weight, ProductStatus status) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.weight = weight;
-        this.status = status;
+    public Product(String name, String description, BigDecimal price, Long weight, ProductStatus status, Integer amount) {
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+        setWeight(weight);
+        setStatus(status);
+        setAmount(amount);
     }
 
     public void addImage(Image image) {
-//        if (!ListImagesValidator.isValid(images))
-//            throw new RuntimeException("Too many images");
-
+        if (!ListImagesValidator.isValid(images))
+            throw new RuntimeException("Too many images");
         this.images.add(image);
     }
 
@@ -76,6 +80,10 @@ public class Product {
 
     public List<Image> getImages() {
         return images;
+    }
+
+    public Integer getAmount() {
+        return amount;
     }
 
     public void setName(String name) {
@@ -108,5 +116,11 @@ public class Product {
 
     public void setStatus(ProductStatus status) {
         this.status = status;
+    }
+
+    public void setAmount(Integer amount) {
+        if(amount.compareTo(0) < 0)
+            throw new IllegalArgumentException("Amount must be greater than zero");
+        this.amount = amount;
     }
 }

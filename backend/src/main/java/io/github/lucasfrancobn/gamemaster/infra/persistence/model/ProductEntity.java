@@ -21,6 +21,7 @@ public class ProductEntity {
     private String description;
     private BigDecimal price;
     private Long weight;
+    private Integer amount;
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

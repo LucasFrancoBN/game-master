@@ -48,6 +48,7 @@ export class CadastrarProdutoComponent {
   productForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(100)]],
+    amount: [0, [Validators.required, Validators.min(0)]],
     price: [0.0, [Validators.required, Validators.min(1)]],
     weight: [0.0, [Validators.required, Validators.min(1)]],
     status: ['', Validators.required]
@@ -69,7 +70,7 @@ export class CadastrarProdutoComponent {
   }
   
   get invalidForm() {
-    return this.productForm.invalid || !this.photoList.length; 
+    return this.productForm.invalid; 
   }
 
   onSubmit() {
@@ -92,6 +93,7 @@ export class CadastrarProdutoComponent {
       },
       error: (e: Error) => {
         this.errorMessage = e.message;
+        this.loading = false;
       },
       complete: () => {
         this.loading = false;

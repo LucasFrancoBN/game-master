@@ -5,5 +5,6 @@ export interface IRegisterProduct {
     description: string,
     price: number,
     weight: number,
-    status: ProductStatus
+    status: ProductStatus,
+    amount: number
 }

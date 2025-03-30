@@ -13,6 +13,8 @@ public record RegisterProductRequest(
         @Positive(message = "Price must be positive")
         @Digits(integer = 16, fraction = 2)
         BigDecimal price,
+        @Positive(message = "Amount must be positive")
+        Integer amount,
         @Positive(message = "Weight must be positive")
         @Digits(integer = 5, fraction = 2)
         Long weight,

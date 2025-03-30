@@ -6,6 +6,6 @@ import java.util.List;
 
 public class ListImagesValidator {
     public static boolean isValid(List<Image> images) {
-        return images != null && !images.isEmpty() && images.size() < 5;
+        return images != null && images.size() <= 5;
     }
 }
