@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.validation.user.EmailValidator;
+import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class User {
 
     public User(UUID id, String email, String password) {
         if (id == null || id.toString().isBlank()) {
-            throw new IllegalArgumentException("Id cannot be blank");
+            throw new DomainValidationException("Id não pode estar vazio");
         }
         this.id = id;
 
@@ -40,7 +41,7 @@ public class User {
 
     private void setEmail(String email) {
         if (!EmailValidator.isValid(email)) {
-            throw new IllegalArgumentException("E-mail inválido.");
+            throw new DomainValidationException("E-mail inválido.");
         }
         this.email = email;
     }

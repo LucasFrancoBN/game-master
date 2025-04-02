@@ -3,6 +3,8 @@ package io.github.lucasfrancobn.gamemaster.infra.service.storage;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
 import io.github.lucasfrancobn.gamemaster.domain.services.StorageService;
+import io.github.lucasfrancobn.gamemaster.infra.exception.storage.CreateDirectoryException;
+import io.github.lucasfrancobn.gamemaster.infra.exception.storage.StorageFileException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +35,7 @@ public class LocalStorageService implements StorageService {
         try {
             Files.createDirectories(Paths.get(uploadDir));
         } catch (IOException e) {
-            throw new RuntimeException("Could not create upload directory", e);
+            throw new CreateDirectoryException("Não foi possível criar o diretório upload: " + e.getMessage());
         }
     }
 
@@ -52,7 +54,7 @@ public class LocalStorageService implements StorageService {
                                 files.get(i).length * 1024 * 1024L
                         );
                     } catch (IOException e) {
-                        throw new RuntimeException("Failed to store file " + fileName, e);
+                        throw new StorageFileException("Falha ao armazenar o arquivo: " + fileName);
                     }
                 })
                 .toList();

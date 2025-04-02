@@ -2,6 +2,8 @@ package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import java.util.UUID;
 
+import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
+
 public class Role {
     private UUID id;
     private String authorityName;
@@ -13,7 +15,7 @@ public class Role {
 
     public Role(UUID id, String authorityName, String authority, String description) {
         if(id == null) {
-            throw new NullPointerException("id is null");
+            throw new DomainValidationException("Id é nulo");
         }
         this.id = id;
         this.authorityName = authorityName;
@@ -37,7 +39,7 @@ public class Role {
 
     public void setAuthorityName(String authorityName) {
         if(authorityName == null || authorityName.isBlank()) {
-            throw new IllegalArgumentException("Authority name cannot be blank.");
+            throw new DomainValidationException("Nome da autoridade não pode estar vazio.");
         }
         this.authorityName = authorityName;
     }
@@ -48,7 +50,7 @@ public class Role {
 
     public void setAuthority(String authority) {
         if(authority == null || authority.isBlank()) {
-            throw new IllegalArgumentException("Authority cannot be blank.");
+            throw new DomainValidationException("Autoridade não pode estar vazio");
         }
         this.authority = authority.toUpperCase();
     }

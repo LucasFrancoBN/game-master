@@ -1,5 +1,6 @@
 package io.github.lucasfrancobn.gamemaster.application.usecase.client;
 
+import io.github.lucasfrancobn.gamemaster.application.exception.client.ClientNotFoundException;
 import io.github.lucasfrancobn.gamemaster.application.gateway.ClientRepository;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Client;
 
@@ -14,7 +15,7 @@ public class UpdateClient {
 
     public void update(UUID id, String clientSecret, String scope) {
         Client clientFounded = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Client not found"));
+                .orElseThrow(() -> new ClientNotFoundException("Client não encontrado."));
 
         if (!clientSecret.isBlank()) {
             clientFounded.setClientSecret(clientSecret);

@@ -4,12 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record RegisterUserRequest(
-        @NotBlank(message = "E-mail cannot be blank")
+        @NotBlank(message = "E-mail não pode ser vazio.")
         String email,
-        @NotBlank(message = "Password cannot be blank")
-        @Size(min = 8, message = "Password must contain a minimum of 8 characters.")
+        @NotBlank(message = "Senha não pode ser vazio.")
+        @Size(min = 8, message = "Senha precisa conter no mínimo 8 caracteres.")
         String password,
-        @NotBlank(message = "User needs a role to be registered")
+        @NotBlank(message = "Usuário precisa de uma autoridade registrada.")
         String authorityName
 ) {
 }

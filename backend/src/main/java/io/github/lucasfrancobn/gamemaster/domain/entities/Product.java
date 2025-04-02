@@ -2,6 +2,7 @@ package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import io.github.lucasfrancobn.gamemaster.domain.entities.validation.product.ListImagesValidator;
+import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class Product {
 
     public void addImage(Image image) {
         if (!ListImagesValidator.isValid(images))
-            throw new RuntimeException("Too many images");
+            throw new DomainValidationException("Muitas imagens.");
         this.images.add(image);
     }
 
@@ -88,28 +89,28 @@ public class Product {
 
     public void setName(String name) {
         if(name.isBlank() || name.length() < 3 || name.length() > 100) {
-            throw new IllegalArgumentException("Name must be between 3 and 100 characters");
+            throw new DomainValidationException("Nome precisa estar entre 3 e 100 caracteres");
         }
         this.name = name;
     }
 
     public void setDescription(String description) {
         if(description.isBlank() || description.length() < 30) {
-            throw new IllegalArgumentException("Description must be between 3 and 500 characters");
+            throw new DomainValidationException("Descrição precisa ter no mínimo 30 caracteres");
         }
         this.description = description;
     }
 
     public void setPrice(BigDecimal price) {
         if(price.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Price must be greater than zero");
+            throw new DomainValidationException("Preço precisa ser maior que 0");
         }
         this.price = price;
     }
 
     public void setWeight(Long weight) {
         if(weight.compareTo(0L) <= 0) {
-            throw new IllegalArgumentException("Weight must be greater than zero");
+            throw new DomainValidationException("Peso precisa ser maior que 0");
         }
         this.weight = weight;
     }
@@ -120,7 +121,7 @@ public class Product {
 
     public void setAmount(Integer amount) {
         if(amount.compareTo(0) < 0)
-            throw new IllegalArgumentException("Amount must be greater than zero");
+            throw new DomainValidationException("Quantidade precisa ser maior que 0");
         this.amount = amount;
     }
 }

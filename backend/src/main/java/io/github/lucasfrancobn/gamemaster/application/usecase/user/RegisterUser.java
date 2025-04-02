@@ -1,10 +1,12 @@
 package io.github.lucasfrancobn.gamemaster.application.usecase.user;
 
+import io.github.lucasfrancobn.gamemaster.application.exception.role.RoleNotFoundException;
+import io.github.lucasfrancobn.gamemaster.application.exception.user.EmailAlreadyRegisteredException;
+import io.github.lucasfrancobn.gamemaster.application.exception.user.EmailIsNullOrBlankException;
 import io.github.lucasfrancobn.gamemaster.application.gateway.RoleRepository;
 import io.github.lucasfrancobn.gamemaster.application.gateway.UserRepository;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Role;
 import io.github.lucasfrancobn.gamemaster.domain.entities.User;
-import io.github.lucasfrancobn.gamemaster.domain.entities.validation.user.EmailValidator;
 
 public class RegisterUser {
     private final UserRepository repository;
@@ -16,14 +18,14 @@ public class RegisterUser {
     }
 
     public void register(String email, String encondedPassword, String authorityName) {
-        if(!EmailValidator.isValid(email))
-            throw new IllegalArgumentException("Invalid email");
+        if(email == null || email.isBlank())
+            throw new EmailIsNullOrBlankException("E-mail não pode ser vazio");
 
         if(repository.existsUserByEmail(email))
-            throw new IllegalArgumentException("Email already registered");
+            throw new EmailAlreadyRegisteredException("Email já está cadastrado.");
 
         Role role = roleRepository.findByAuthorityName(authorityName)
-                .orElseThrow(() -> new IllegalArgumentException("Authority not found"));
+                .orElseThrow(() -> new RoleNotFoundException("Autoridade não encontrada."));
 
         User user = new User(email, encondedPassword);
         user.getRoles().add(role);
