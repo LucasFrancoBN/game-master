@@ -94,8 +94,9 @@ export class CadastrarProdutoComponent {
         this.message.success("Produto criado com sucesso");
       },
       error: (e: IException) => {
-        console.log(e)
-        this.errorMessage = e.message;
+
+        if(e.errors?.length) this.errorMessage = e.errors.map(e => `• ${e.message}`).join('\n');
+        else this.errorMessage = e.message;
         this.loading = false;
       },
       complete: () => {
