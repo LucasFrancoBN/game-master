@@ -17,6 +17,8 @@ import { IRegisterProduct } from '../../models/register-product.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { LoadingComponent } from "../../../../shared/components/loading/loading.component";
+import { HttpErrorResponse } from '@angular/common/http';
+import { IException } from '../../../../shared/exception/exception.type';
 
 
 
@@ -91,8 +93,9 @@ export class CadastrarProdutoComponent {
         this.photoList = [];
         this.message.success("Produto criado com sucesso");
       },
-      error: (e: Error) => {
-        this.errorMessage = e.message;
+      error: (e: IException) => {
+        if(e.errors?.length) this.errorMessage = e.errors.map(e => `• ${e.message}`).join('\n');
+        else this.errorMessage = e.message;
         this.loading = false;
       },
       complete: () => {

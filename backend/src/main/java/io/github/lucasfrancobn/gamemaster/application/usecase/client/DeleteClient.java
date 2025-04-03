@@ -1,5 +1,6 @@
 package io.github.lucasfrancobn.gamemaster.application.usecase.client;
 
+import io.github.lucasfrancobn.gamemaster.application.exception.client.ClientNotFoundException;
 import io.github.lucasfrancobn.gamemaster.application.gateway.ClientRepository;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Client;
 
@@ -13,8 +14,8 @@ public class DeleteClient {
     }
 
     public void delete(UUID id) {
-        Client client = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Client not found"));
+        Client client = repository.getClientById(id)
+                .orElseThrow(() -> new ClientNotFoundException("Client não encontrado."));
 
         repository.deleteClient(client);
     }

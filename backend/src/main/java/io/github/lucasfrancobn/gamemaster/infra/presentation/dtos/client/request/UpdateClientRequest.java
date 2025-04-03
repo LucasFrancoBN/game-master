@@ -3,9 +3,9 @@ package io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.client.reques
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateClientRequest(
-        @NotBlank(message = "Client secret cannot be null")
+        @NotBlank(message = "Client secret não pode ser nulo")
         String clientSecret,
-        @NotBlank(message = "Scope cannot be null")
+        @NotBlank(message = "Scope não pode ser nulo")
         String scope
 ) {
 }

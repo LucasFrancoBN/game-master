@@ -6,6 +6,8 @@ import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ClientEntity;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.repository.ClientRepositoryJpa;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ClientMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,27 +16,34 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ClientRepositoryImpl implements ClientRepository {
     private final ClientRepositoryJpa repositoryJpa;
 
     @Override
     public Client save(Client client) {
+        log.trace("Saving client with id {}", client.getClientId());
         ClientEntity saved = repositoryJpa.save(ClientMapper.toEntity(client));
+        log.debug("Client saved with id {}", saved.getClientId());
         return ClientMapper.toDomain(saved);
     }
 
     @Override
     public boolean existsByClientId(String clientId) {
-        return repositoryJpa.existsByClientId(clientId);
+        boolean exists = repositoryJpa.existsByClientId(clientId);
+        log.trace("exists client with client id {}: {}", clientId, exists);
+        return exists;
     }
 
     @Override
     public List<Client> getClients() {
+        log.debug("Getting all clients");
         return repositoryJpa.findAll().stream().map(ClientMapper::toDomain).toList();
     }
 
     @Override
     public Optional<Client> getClientById(UUID id) {
+        log.debug("Getting Client by id {}", id);
         return repositoryJpa
                 .findById(id)
                 .map(ClientMapper::toDomain);
@@ -42,17 +51,15 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void deleteClient(Client client) {
+        log.trace("Deleting client with id {}", client.getClientId());
         repositoryJpa.delete(ClientMapper.toEntity(client));
+        log.debug("Client deleted");
     }
 
     @Override
     public Optional<Client> getClientByClientId(String clientId) {
+        log.debug("Getting client with id {}", clientId);
         return repositoryJpa.findByClientId(clientId)
                 .map(ClientMapper::toDomain);
-    }
-
-    @Override
-    public Optional<Client> findById(UUID id) {
-        return repositoryJpa.findById(id).map(ClientMapper::toDomain);
     }
 }

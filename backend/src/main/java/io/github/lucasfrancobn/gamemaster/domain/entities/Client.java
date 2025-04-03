@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.validation.client.RedirectUriValidator;
+import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class Client {
 
     public Client(UUID id, String clientId, String clientSecret, String redirectUri, String scope) {
         if(id == null) {
-            throw new IllegalArgumentException("id cannot be null");
+            throw new DomainValidationException("id não pode ser nulo.");
         }
         this.id = id;
 
@@ -43,7 +44,7 @@ public class Client {
 
     public void setClientId(String clientId) {
         if(clientId == null || clientId.isBlank()) {
-            throw new IllegalArgumentException("client id cannot be empty");
+            throw new DomainValidationException("client id não pode ser vazio");
         }
 
         this.clientId = clientId;
@@ -55,7 +56,7 @@ public class Client {
 
     public void setClientSecret(String clientSecret) {
         if(clientSecret == null || clientSecret.isBlank()) {
-            throw new IllegalArgumentException("client secret cannot be empty");
+            throw new DomainValidationException("client secret não pode ser vazio");
         }
         this.clientSecret = clientSecret;
     }
@@ -66,7 +67,7 @@ public class Client {
 
     public void setRedirectUri(String redirectUri) {
         if(!RedirectUriValidator.isValid(redirectUri)) {
-            throw new IllegalArgumentException("redirect uri is not valid");
+            throw new DomainValidationException("redirect uri não é válida");
         }
 
         this.redirectUri = redirectUri;
@@ -78,7 +79,7 @@ public class Client {
 
     public void setScope(String scope) {
         if(scope == null || scope.isBlank()) {
-            throw new IllegalArgumentException("scope cannot be empty");
+            throw new DomainValidationException("scope não pode estar vazio");
         }
 
         this.scope = scope;

@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.lucasfrancobn.gamemaster.application.usecase.image.CleanOrphanFilesUsecase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableScheduling
 @RequiredArgsConstructor
+@Slf4j
 public class FileCleanupScheduler {
     private final CleanOrphanFilesUsecase cleanOrphanFilesUsecase;
 
@@ -22,7 +24,7 @@ public class FileCleanupScheduler {
         try {
             cleanOrphanFilesUsecase.clean();
         } catch (Exception e) {
-            // TODO - adicionar log de erro
+            log.error("An error occurred while cleaning orphaned files: {}", e.getMessage());
         }
     }
 }

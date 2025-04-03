@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
+import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 public class Image {
     private String name;
@@ -13,11 +14,11 @@ public class Image {
 
     public Image(String name, String path, ImageType type, Long size) {
         if(name.isBlank() || name.length() > 255) {
-            throw new IllegalArgumentException("Name cannot be blank or longer than 255 characters");
+            throw new DomainValidationException("Nome não pode estar vazio ou maior que 255 caracteres");
         }
 
         if(path.isBlank() || path.length() > 500) {
-            throw new IllegalArgumentException("Path cannot be blank or longer than 500 characters");
+            throw new DomainValidationException("Path não pode estar vazio ou maior que 500 caracteres");
         }
 
         this.name = name;

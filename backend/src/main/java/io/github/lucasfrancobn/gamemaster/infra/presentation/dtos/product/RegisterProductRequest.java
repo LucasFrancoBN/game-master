@@ -6,19 +6,19 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public record RegisterProductRequest(
-        @NotBlank(message = "Name cannot be blank")
+        @NotBlank(message = "Nome não pode estar vazio")
         String name,
-        @NotBlank(message = "Description cannot be blank")
+        @NotBlank(message = "Descrição não pode estar vazio")
         String description,
-        @Positive(message = "Price must be positive")
+        @Positive(message = "Preço precisa ser positivo")
         @Digits(integer = 16, fraction = 2)
         BigDecimal price,
-        @Positive(message = "Amount must be positive")
+        @Positive(message = "Quantidade precisa ser positivo")
         Integer amount,
-        @Positive(message = "Weight must be positive")
+        @Positive(message = "Peso precisa ser positivo")
         @Digits(integer = 5, fraction = 2)
         Long weight,
-        @NotNull
+        @NotNull(message = "Status não pode ser nulo")
         ProductStatus status
 ) {
 }
