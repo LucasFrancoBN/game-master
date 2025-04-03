@@ -14,7 +14,7 @@ public class DeleteClient {
     }
 
     public void delete(UUID id) {
-        Client client = repository.findById(id)
+        Client client = repository.getClientById(id)
                 .orElseThrow(() -> new ClientNotFoundException("Client não encontrado."));
 
         repository.deleteClient(client);

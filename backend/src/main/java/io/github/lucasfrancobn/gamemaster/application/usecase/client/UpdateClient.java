@@ -14,7 +14,7 @@ public class UpdateClient {
     }
 
     public void update(UUID id, String clientSecret, String scope) {
-        Client clientFounded = repository.findById(id)
+        Client clientFounded = repository.getClientById(id)
                 .orElseThrow(() -> new ClientNotFoundException("Client não encontrado."));
 
         if (!clientSecret.isBlank()) {

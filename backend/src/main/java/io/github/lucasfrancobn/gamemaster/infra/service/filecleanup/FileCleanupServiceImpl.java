@@ -23,8 +23,10 @@ public class FileCleanupServiceImpl implements FileCleanupService {
 
     @Override
     public void cleanOrphanFiles(List<String> filenames) {
+        log.info("Starting clean orphan files process");
         Path uploadPath = Paths.get(uploadDir);
         try(Stream<Path> paths = Files.walk(uploadPath)) {
+            log.info("Walking through by files at directory {}", uploadDir);
             paths
                 .filter(Files::isRegularFile)
                 .filter(path -> !filenames.contains(path.getFileName()))
@@ -37,7 +39,9 @@ public class FileCleanupServiceImpl implements FileCleanupService {
 
     private void safeDelete(Path path) {
         try {
+            log.info("Deleting file {}", path.getFileName());
             Files.delete(path);
+            log.debug("File deleted successfully");
         } catch (Exception e) {
             log.error("An error occurred while deleting the file from the directory: {}", e.getMessage());
         }

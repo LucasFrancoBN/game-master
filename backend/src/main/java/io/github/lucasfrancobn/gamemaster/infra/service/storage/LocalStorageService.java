@@ -7,6 +7,8 @@ import io.github.lucasfrancobn.gamemaster.infra.exception.storage.CreateDirector
 import io.github.lucasfrancobn.gamemaster.infra.exception.storage.StorageFileException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,6 +26,7 @@ import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LocalStorageService implements StorageService {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss-SSS");
 
@@ -33,6 +36,7 @@ public class LocalStorageService implements StorageService {
     @PostConstruct
     public void init() {
         try {
+            log.trace("Creating directory {}", uploadDir);
             Files.createDirectories(Paths.get(uploadDir));
         } catch (IOException e) {
             throw new CreateDirectoryException("Não foi possível criar o diretório upload: " + e.getMessage());
@@ -41,12 +45,15 @@ public class LocalStorageService implements StorageService {
 
     @Override
     public List<Image> uploadAllFiles(List<byte[]> files, List<String> fileNames) {
+        log.info("Starting upload all files process");
         return IntStream.range(0, files.size())
                 .mapToObj(i -> {
                     String fileName = generateUniqueFileName(fileNames.get(i));
                     Path path = Paths.get(uploadDir, fileName);
                     try {
+                        log.info("Creating image {} at directory {}", fileName, uploadDir);
                         Files.write(path, files.get(i));
+                        log.debug("File {} created at {}", fileName, uploadDir);
                         return new Image(
                                 fileName,
                                 path.toAbsolutePath().toString(),

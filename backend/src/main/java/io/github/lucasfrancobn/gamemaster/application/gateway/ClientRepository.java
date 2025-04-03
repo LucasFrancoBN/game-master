@@ -12,9 +12,7 @@ public interface ClientRepository {
     boolean existsByClientId(String clientId);
 
     List<Client> getClients();
-
-    Optional<Client> findById(UUID id);
-
+    
     Optional<Client> getClientById(UUID id);
 
     Optional<Client> getClientByClientId(String clientId);
