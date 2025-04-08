@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import {GameMasterSvgComponent} from '../../../shared/components/svg/game-master-svg/game-master-svg.component';
+import { GameMasterSvgComponent } from '../../../shared/components/svg/game-master-svg/game-master-svg.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [
-    GameMasterSvgComponent
-  ]
+  imports: [GameMasterSvgComponent],
 })
 export class HomeComponent {
   constructor() {}

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     private final ClientRepositoryJpa repositoryJpa;
 
     @Override
+    @Transactional
     public Client save(Client client) {
         log.trace("Saving client with id {}", client.getClientId());
         ClientEntity saved = repositoryJpa.save(ClientMapper.toEntity(client));
@@ -29,6 +31,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existsByClientId(String clientId) {
         boolean exists = repositoryJpa.existsByClientId(clientId);
         log.trace("exists client with client id {}: {}", clientId, exists);
@@ -36,12 +39,14 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Client> getClients() {
         log.debug("Getting all clients");
         return repositoryJpa.findAll().stream().map(ClientMapper::toDomain).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Client> getClientById(UUID id) {
         log.debug("Getting Client by id {}", id);
         return repositoryJpa
@@ -50,6 +55,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
+    @Transactional
     public void deleteClient(Client client) {
         log.trace("Deleting client with id {}", client.getClientId());
         repositoryJpa.delete(ClientMapper.toEntity(client));
@@ -57,6 +63,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Client> getClientByClientId(String clientId) {
         log.debug("Getting client with id {}", clientId);
         return repositoryJpa.findByClientId(clientId)

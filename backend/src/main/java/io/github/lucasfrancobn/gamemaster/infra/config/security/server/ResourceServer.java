@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.infra.config.security.server;
 
 import io.github.lucasfrancobn.gamemaster.infra.config.security.filter.JwtCustomAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +37,6 @@ public class ResourceServer {
             JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter
     ) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 // Adiciona a página de login customizada
                 .formLogin(configurer -> configurer.loginPage("/login").permitAll())
                 // Estamos falando que todas requisições devem ser autenticadas.
@@ -46,6 +46,13 @@ public class ResourceServer {
 
                     authorizeRequests.anyRequest().authenticated();
                 })
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                        })
+                )
                 .oauth2ResourceServer(oauth2Rs -> oauth2Rs.jwt(Customizer.withDefaults()))
                 // estamos falando que o filtro criado por nós deve ser executado depois do filtro de BearerToken
                 .addFilterAfter(jwtCustomAuthenticationFilter, BearerTokenAuthenticationFilter.class)

@@ -16,13 +16,40 @@ p, h1 {
 .ant-btn {
   height: auto;
   border-radius: 4px;
+}
+
+.ant-btn:hover {
+  color: oklch(0.372 0.044 257.287);
+  border-color: oklch(70.4% 0.04 256.788);
+}
+
+.ant-btn.ant-btn-primary:not([disabled]) {
   background-color: oklch(0.372 0.044 257.287);
   border-color: oklch(0.446 0.043 257.281);
 }
 
-.ant-btn-primary:hover, .ant-btn-primary:focus {
-  background-color: oklch(0.446 0.043 257.281);
-  border-color: oklch(0.554 0.046 257.417);
+.ant-btn.ant-btn-primary:not([disabled]):hover {
+  color: #fff;
+  background-color: oklch(55.4% 0.046 257.417);
+  border-color: oklch(70.4% 0.04 256.788);
+}
+
+.ant-btn[nztype="link"] {
+  background-color: transparent;
+  border: none;
+  color: oklch(0.372 0.044 257.287);
+  display: block;
+  border-radius: 4px;
+}
+
+.ant-btn[nztype="link"]:disabled {
+  color: oklch(86.9% 0.022 252.894);
+
+}
+
+.ant-btn[nztype="link"]:hover:not(:disabled) {
+  color: oklch(37.2% 0.044 257.287);
+  background-color: oklch(92.9% 0.013 255.508);
 }
 
 // Override less variables to here

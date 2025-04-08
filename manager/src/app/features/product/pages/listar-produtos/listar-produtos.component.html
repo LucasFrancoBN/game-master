@@ -1,0 +1,53 @@
+<h1 class="title mb-3!">Listar produtos</h1>
+<nz-table 
+    nzShowSizeChanger
+    [nzLoading]="loading" 
+    [nzLoadingIndicator]="loadingRef"
+    [nzFrontPagination]="false"
+    [nzTotal]="paginationResponse.totalElements"
+    [nzPageSize]="paginationResponse.pageSize"
+    [nzPageIndex]="paginationResponse.currentPage"
+    [nzData]="paginationResponse.content" 
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzScroll]="{y: '540px'}"
+>
+    <thead>
+      <tr>
+        <th nzCustomFilter>
+          Nome
+          <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="name.length > 0" [nzDropdownMenu]="menu">
+            <nz-icon nzType="search" />
+          </nz-filter-trigger>
+        </th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+        <th>Peso (g)</th>
+        <th nzColumnKey="status" [nzFilters]="options" [nzFilterFn]="true">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of paginationResponse.content; track data.id) {
+        <tr>
+          <td>{{ data.name }}</td>
+          <td>{{ data.amount }}</td>
+          <td>{{ formattedPrice(data.price) }}</td>
+          <td>{{ data.weight }}</td>
+          <td>{{ data.status | translateStatus }}</td>
+        </tr>
+      }
+    </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="p-2">
+        <app-input type="text" placeholder="Nome do produto" [control]="nameFilter" class="mb-1" />
+        <div class="flex justify-between gap-2">
+          <app-button size="small" type="primary" class="w-full" (click)="nameSearch()"><span text>Pesquisar</span></app-button>
+          <app-button size="small" type="default" class="w-full" (click)="reset()"><span text>Limpar</span></app-button>
+        </div>
+      </div>
+    </div>
+</nz-dropdown-menu>
+<ng-template #loadingRef>
+  <app-loading [active]="loading" />
+</ng-template>

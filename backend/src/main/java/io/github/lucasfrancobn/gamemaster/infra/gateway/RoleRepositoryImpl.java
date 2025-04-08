@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     private final RoleRepositoryJpa repositoryJpa;
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Role> findByAuthorityName(String authorityName) {
         log.debug("Getting role  with authority name: {}", authorityName);
         return repositoryJpa.findByAuthorityName(authorityName)

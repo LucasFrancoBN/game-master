@@ -57,13 +57,12 @@ public class AuthorizationServer {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.loginPage("/login"))
-                // Redireciona para a página de login quando não autenticado
-                .exceptionHandling(exceptions -> exceptions
-                        .defaultAuthenticationEntryPointFor(
-                                new LoginUrlAuthenticationEntryPoint("/login"),
-                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
-                        )
+                .formLogin(form ->
+                        form
+                                .loginPage("/login")
+                                .failureHandler((request, response, exception) -> {
+                                    response.sendRedirect("/login?error");
+                                })
                 );
 
         return http.build();
