@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResult<?>> products(
+    public ResponseEntity<PaginatedResult<ListProduct>> products(
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = "10",required = false) Integer size,
             @RequestParam(required = false) String name,

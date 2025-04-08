@@ -57,13 +57,7 @@ public class AuthorizationServer {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
                 )
-                .formLogin(form ->
-                        form
-                                .loginPage("/login")
-                                .failureHandler((request, response, exception) -> {
-                                    response.sendRedirect("/login?error");
-                                })
-                );
+                .formLogin(form -> form.loginPage("/login"));
 
         return http.build();
     }
