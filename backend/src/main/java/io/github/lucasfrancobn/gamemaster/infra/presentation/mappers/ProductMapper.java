@@ -3,7 +3,8 @@ package io.github.lucasfrancobn.gamemaster.infra.presentation.mappers;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ImageEntity;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ProductEntity;
-import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
 
 public class ProductMapper {
     public static Product toDomain(RegisterProductRequest request) {
@@ -14,6 +15,33 @@ public class ProductMapper {
                 request.weight(),
                 request.status(),
                 request.amount()
+        );
+    }
+
+    public static Product toDomain(ProductEntity entity) {
+        Product product = new Product(
+                entity.getId(),
+                entity.getName(),
+                entity.getDescription(),
+                entity.getPrice(),
+                entity.getWeight(),
+                entity.getStatus(),
+                entity.getAmount()
+        );
+
+        entity.getImages().forEach(ie -> product.addImage(ImageMapper.toDomain(ie)));
+
+        return product;
+    }
+
+    public static ListProduct toListProduct(Product product) {
+        return new ListProduct(
+                product.getId().toString(),
+                product.getName(),
+                product.getAmount(),
+                product.getPrice(),
+                product.getWeight(),
+                product.getStatus()
         );
     }
 

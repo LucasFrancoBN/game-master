@@ -1,4 +1,4 @@
-package io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product;
+package io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import jakarta.validation.constraints.*;
