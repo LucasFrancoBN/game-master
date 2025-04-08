@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.infra.config.bean;
 
 import io.github.lucasfrancobn.gamemaster.application.gateway.ProductRepository;
+import io.github.lucasfrancobn.gamemaster.application.usecase.product.GetProductById;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.PaginatedProducts;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.RegisterProduct;
 import io.github.lucasfrancobn.gamemaster.domain.services.StorageService;
@@ -17,5 +18,10 @@ public class ProductConfig {
     @Bean
     public PaginatedProducts paginatedProducts(ProductRepository productRepository) {
         return new PaginatedProducts(productRepository);
+    }
+
+    @Bean
+    public GetProductById getProductById(ProductRepository productRepository) {
+        return new GetProductById(productRepository);
     }
 }

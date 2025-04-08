@@ -2,12 +2,14 @@ package io.github.lucasfrancobn.gamemaster.infra.controller;
 
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.PaginatedResult;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Pagination;
+import io.github.lucasfrancobn.gamemaster.application.usecase.product.GetProductById;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.PaginatedProducts;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.RegisterProduct;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import io.github.lucasfrancobn.gamemaster.infra.exception.product.ReadImageException;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.FullProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ProductMapper;
 import jakarta.annotation.security.PermitAll;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,6 +36,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final RegisterProduct registerProduct;
     private final PaginatedProducts paginatedProducts;
+    private final GetProductById productById;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> registerProduct(
@@ -81,5 +85,11 @@ public class ProductController {
         );
 
         return ResponseEntity.ok(listProductpage);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FullProduct> getProduct(@PathVariable UUID id) {
+        Product product = productById.getProductById(id);
+        return ResponseEntity.ok(ProductMapper.toFullProduct(product));
     }
 }

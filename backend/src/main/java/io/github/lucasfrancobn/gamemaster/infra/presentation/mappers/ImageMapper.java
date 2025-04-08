@@ -2,6 +2,7 @@ package io.github.lucasfrancobn.gamemaster.infra.presentation.mappers;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ImageEntity;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.response.FullImage;
 
 public class ImageMapper {
     public static Image toDomain(ImageEntity entity) {
@@ -10,6 +11,15 @@ public class ImageMapper {
                 entity.getPath(),
                 entity.getType(),
                 entity.getSize()
+        );
+    }
+
+    public static FullImage toFullImage(Image image) {
+        return new FullImage(
+                image.getName(),
+                image.getPath(),
+                image.getType(),
+                image.getSize()
         );
     }
 

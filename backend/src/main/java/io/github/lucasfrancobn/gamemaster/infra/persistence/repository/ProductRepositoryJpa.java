@@ -4,5 +4,7 @@ import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface ProductRepositoryJpa extends JpaRepository<ProductEntity, String>, JpaSpecificationExecutor<ProductEntity> {
+import java.util.UUID;
+
+public interface ProductRepositoryJpa extends JpaRepository<ProductEntity, UUID>, JpaSpecificationExecutor<ProductEntity> {
 }

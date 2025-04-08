@@ -4,6 +4,7 @@ import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ImageEntity;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ProductEntity;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.FullProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
 
 public class ProductMapper {
@@ -32,6 +33,19 @@ public class ProductMapper {
         entity.getImages().forEach(ie -> product.addImage(ImageMapper.toDomain(ie)));
 
         return product;
+    }
+
+    public static FullProduct toFullProduct(Product product) {
+        return new FullProduct(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getAmount(),
+                product.getPrice(),
+                product.getWeight(),
+                product.getStatus(),
+                product.getImages().stream().map(ImageMapper::toFullImage).toList()
+        );
     }
 
     public static ListProduct toListProduct(Product product) {

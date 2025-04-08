@@ -17,6 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static io.github.lucasfrancobn.gamemaster.infra.persistence.specification.ProductSpecificationAdapter.*;
 
 @Repository
@@ -37,7 +40,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     @Transactional(readOnly = true)
     public PaginatedResult<Product> findAll(Pagination pagination, ProductFilter filter) {
-        log.trace("Finding all paginated products with pagination, name, and status: {} | {} | {}", pagination, filter.name(), filter.statusList());
+        log.debug("Finding all paginated products with pagination, name, and status: {} | {} | {}", pagination, filter.name(), filter.statusList());
 
         PageRequest pageRequest = PageRequest.of(pagination.pageNumber(), pagination.pageSize());
         Specification<ProductEntity> spec = fromFilter(filter);
@@ -49,5 +52,12 @@ public class ProductRepositoryImpl implements ProductRepository {
                 pagination.pageSize(),
                 productPage.getTotalElements()
         );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Product> findById(UUID id) {
+        log.debug("Finding product with id: {}", id);
+        return repositoryJpa.findById(id).map(ProductMapper::toDomain);
     }
 }

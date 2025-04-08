@@ -6,8 +6,13 @@ import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Paginati
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public interface ProductRepository {
     void save(Product product);
 
     PaginatedResult<Product> findAll(Pagination pagination, ProductFilter filter);
+
+    Optional<Product> findById(UUID id);
 }
