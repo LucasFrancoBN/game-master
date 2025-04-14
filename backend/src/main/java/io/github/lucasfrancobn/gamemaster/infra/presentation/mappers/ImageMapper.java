@@ -10,7 +10,8 @@ public class ImageMapper {
                 entity.getName(),
                 entity.getPath(),
                 entity.getType(),
-                entity.getSize()
+                entity.getSize(),
+                entity.getUrl()
         );
     }
 
@@ -19,7 +20,8 @@ public class ImageMapper {
                 image.getName(),
                 image.getPath(),
                 image.getType(),
-                image.getSize()
+                image.getSize(),
+                image.getUrl()
         );
     }
 
@@ -29,6 +31,7 @@ public class ImageMapper {
         entity.setPath(domain.getPath());
         entity.setType(domain.getType());
         entity.setSize(domain.getSize());
+        entity.setUrl(domain.getUrl());
 
         return entity;
     }

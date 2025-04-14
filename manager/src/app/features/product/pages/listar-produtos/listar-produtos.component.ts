@@ -18,6 +18,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { finalize } from 'rxjs';
 import { TranslateStatusPipe } from '../../../../shared/pipes/translate-status.pipe';
 import { IException } from '../../../../shared/exception/exception.type';
+import { RouterLink } from '@angular/router';
 
 interface IFilterStatus {
   text: string;
@@ -37,6 +38,7 @@ interface IFilterStatus {
     LoadingComponent,
     ButtonComponent,
     TranslateStatusPipe,
+    RouterLink,
   ],
   templateUrl: './listar-produtos.component.html',
 })

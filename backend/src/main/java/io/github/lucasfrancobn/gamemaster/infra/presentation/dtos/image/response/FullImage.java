@@ -6,6 +6,7 @@ public record FullImage(
         String name,
         String path,
         ImageType type,
-        Long size
+        Long size,
+        String url
 ) {
 }

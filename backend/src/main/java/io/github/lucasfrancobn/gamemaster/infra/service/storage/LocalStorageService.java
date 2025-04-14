@@ -33,6 +33,9 @@ public class LocalStorageService implements StorageService {
     @Value("${app.upload.dir}")
     private String uploadDir;
 
+    @Value("${app.upload.url}")
+    private String uploadUrl;
+
     @PostConstruct
     public void init() {
         try {
@@ -58,7 +61,8 @@ public class LocalStorageService implements StorageService {
                                 fileName,
                                 path.toAbsolutePath().toString(),
                                 ImageType.fromExtension(fileName.split("\\.")[1]),
-                                files.get(i).length * 1024 * 1024L
+                                (long) files.get(i).length,
+                                this.uploadUrl + "/gamemaster/api/v1/uploads/" + fileName
                         );
                     } catch (IOException e) {
                         throw new StorageFileException("Falha ao armazenar o arquivo: " + fileName);
