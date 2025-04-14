@@ -12,18 +12,21 @@ import { IListProduct } from '../../models/list-product.model';
 import { IPagination } from '../../../../shared/types/pagination.type';
 import { ProductStatus } from '../../models/product-status.enum';
 import { InputComponent } from '../../../../shared/components/input/input.component';
-import { translateStatus } from '../../utils/product-status.utils';
 import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { finalize } from 'rxjs';
 import { TranslateStatusPipe } from '../../../../shared/pipes/translate-status.pipe';
 import { IException } from '../../../../shared/exception/exception.type';
 import { RouterLink } from '@angular/router';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 interface IFilterStatus {
   text: string;
   value: ProductStatus;
 }
+
+const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_INDEX = 1;
 
 @Component({
   selector: 'app-listar-produtos',
@@ -39,19 +42,18 @@ interface IFilterStatus {
     ButtonComponent,
     TranslateStatusPipe,
     RouterLink,
+    NzAlertModule,
   ],
   templateUrl: './listar-produtos.component.html',
 })
 export class ListarProdutosComponent implements OnInit {
-  private readonly DEFAULT_PAGE_SIZE = 10;
-  private readonly DEFAULT_PAGE_INDEX = 1;
   private readonly listProductService = inject(ListProductsService);
   private readonly fb = inject(NonNullableFormBuilder);
 
   error = '';
   loading = false;
-  pageSize = this.DEFAULT_PAGE_SIZE;
-  pageIndex = this.DEFAULT_PAGE_INDEX;
+  pageSize = DEFAULT_PAGE_SIZE;
+  pageIndex = DEFAULT_PAGE_INDEX;
 
   visible = false;
   nameFilter = this.fb.control('');
@@ -65,8 +67,8 @@ export class ListarProdutosComponent implements OnInit {
 
   paginationResponse: IPagination<IListProduct> = {
     content: [],
-    currentPage: this.DEFAULT_PAGE_INDEX,
-    pageSize: this.DEFAULT_PAGE_SIZE,
+    currentPage: DEFAULT_PAGE_INDEX,
+    pageSize: DEFAULT_PAGE_SIZE,
     totalElements: 0,
   };
 
@@ -109,7 +111,7 @@ export class ListarProdutosComponent implements OnInit {
   reset() {
     this.visible = false;
     this.nameFilter.setValue('');
-    this.pageIndex = 0;
+    this.pageIndex = DEFAULT_PAGE_INDEX;
 
     this.searchProducts(
       this.pageIndex,
@@ -121,7 +123,7 @@ export class ListarProdutosComponent implements OnInit {
 
   nameSearch() {
     this.visible = false;
-    this.pageIndex = 0;
+    this.pageIndex = DEFAULT_PAGE_INDEX;
 
     this.searchProducts(
       this.pageIndex,

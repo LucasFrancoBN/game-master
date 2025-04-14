@@ -21,6 +21,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       const error = e.error;
 
+      console.log(error);
+
       if (isIException(error)) return throwError(() => error);
 
       return throwError(() => buildError(e.status));

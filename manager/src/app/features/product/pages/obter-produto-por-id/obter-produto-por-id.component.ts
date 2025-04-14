@@ -12,7 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { CarouselComponent } from '../../../../shared/components/carousel/carousel.component';
-import { AuthComponent } from '../../../auth/pages/auth.component';
+import { IException } from '../../../../shared/exception/exception.type';
 
 @Component({
   selector: 'app-obter-produto-por-id',
@@ -31,8 +31,10 @@ export class ObterProdutoPorIdComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly getProductById = inject(GetProductByIdService);
 
+  activeImage = false;
   product?: IProductModel;
   loading = false;
+  errorMessage?: string;
   statusClass = {
     [ProductStatus.AVAILABLE]:
       'text-sm text-green-800 bg-emerald-100 px-2 py-1 rounded-4xl',
@@ -50,7 +52,10 @@ export class ObterProdutoPorIdComponent implements OnInit {
     this.getProductById
       .getProduct(id)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((data) => (this.product = data));
+      .subscribe({
+        next: (data) => (this.product = data),
+        error: (error: IException) => (this.errorMessage = error.message),
+      });
   }
 
   formattedPrice(price: number) {
