@@ -3,125 +3,213 @@ import {
   Component,
   ElementRef,
   inject,
+  OnDestroy,
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { debounceTime, fromEvent } from 'rxjs';
+import { debounceTime, fromEvent, Subject, takeUntil } from 'rxjs';
 import { ButtonComponent } from '../button/button.component';
 
-interface ISlideArray {
+interface Slide {
   position: number;
   element: HTMLDivElement;
 }
 
-interface IIndex {
+interface SlideIndices {
   prev: number | undefined;
   active: number;
   next: number | undefined;
 }
+
+const DEBOUNCE_RESIZE_TIME = 200;
+const MOVEMENT_THRESHOLD = 120;
+const TRANSITION_TIME = 'transform .3s';
 
 @Component({
   selector: 'app-carousel',
   imports: [ButtonComponent],
   templateUrl: './carousel.component.html',
 })
-export class CarouselComponent implements AfterViewInit {
+export class CarouselComponent implements AfterViewInit, OnDestroy {
   private readonly renderer = inject(Renderer2);
+  private readonly destroy$ = new Subject<void>();
+
+  private controlListeners: (() => void)[] = [];
+  private mousedownListener = () => {};
+  private mouseupListener = () => {};
   private moveListener = () => {};
-  private hasMoved = false;
-  private slideArray: ISlideArray[] = [];
-  private dist = { finalPosition: 0, startX: 0, movement: 0, movePosition: 0 };
-  private index: IIndex = {
+
+  private isDragging = false;
+  private slides: Slide[] = [];
+  private dragState = {
+    finalPosition: 0,
+    startX: 0,
+    movement: 0,
+    movePosition: 0,
+  };
+  private currentIndices: SlideIndices = {
     prev: 0,
     active: 0,
     next: 1,
   };
+
   @ViewChild('wrapper') wrapper!: ElementRef<HTMLDivElement>;
   @ViewChild('slide') slide!: ElementRef<HTMLDivElement>;
   @ViewChild('wrapperControl') wrapperControl!: ElementRef<HTMLDivElement>;
-  control!: HTMLCollection;
-  content!: HTMLCollection;
+  controls!: HTMLCollection;
+  contentSlides!: HTMLCollection;
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.content = this.slide.nativeElement.children;
-      this.control = this.wrapperControl.nativeElement.children;
-      this.bindEvents();
-      this.transition(true);
-      this.slidesConfig();
-      this.changeSlide(0);
-      this.addResizeEvent();
+      this.initializeCarousel();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.controlListeners.forEach((removeListener) => removeListener());
+    this.mousedownListener();
+    this.mouseupListener();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeCarousel(): void {
+    this.contentSlides = this.slide.nativeElement.children;
+    this.controls = this.wrapperControl.nativeElement.children;
+
+    this.transition(true);
+    this.setupSlides();
+    this.setupEventListeners();
+    this.updateActiveSlide(0);
+  }
+
+  private setupEventListeners(): void {
+    this.setupControlNavigation();
+    this.setupDragEvents();
+    this.setupResizeHandler();
+  }
+
+  private setupControlNavigation(): void {
+    Array.from(this.controls).forEach((el, i) => {
+      const element = el as HTMLElement;
+      this.addControlEvent(element, i);
+    });
+  }
+
+  private addControlEvent(item: HTMLElement, index: number) {
+    const controlEvent = this.renderer.listen(
+      item,
+      'click',
+      (event: MouseEvent) => {
+        event.preventDefault();
+        this.updateActiveSlide(index);
+      }
+    );
+    this.controlListeners.push(controlEvent);
+  }
+
+  private setupDragEvents() {
+    const { nativeElement } = this.wrapper;
+
+    this.mousedownListener = this.renderer.listen(
+      nativeElement,
+      'mousedown',
+      this.startDrag.bind(this)
+    );
+    this.mouseupListener = this.renderer.listen(
+      document,
+      'mouseup',
+      this.endDrag.bind(this)
+    );
+  }
+
+  private setupResizeHandler() {
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(DEBOUNCE_RESIZE_TIME), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.setupSlides();
+        this.updateActiveSlide(this.currentIndices.active);
+      });
+  }
+
+  private setupSlides() {
+    this.slides = [...this.contentSlides].map((el) => {
+      const position = this.slidePosition(el as HTMLDivElement);
+      return { position, element: el as HTMLDivElement };
     });
   }
 
   private transition(active: boolean) {
-    this.slide.nativeElement.style.transition = active ? 'transform .3s' : '';
+    this.slide.nativeElement.style.transition = active ? TRANSITION_TIME : '';
     this.wrapperControl.nativeElement.style.transition = active
-      ? 'transform .3s'
+      ? TRANSITION_TIME
       : '';
   }
 
-  private moveSlide(distX: number) {
-    this.dist.movePosition = distX;
+  private updateSlidePosition(distX: number) {
+    this.dragState.movePosition = distX;
     this.slide.nativeElement.style.transform = `translate3d(${distX}px, 0, 0)`;
   }
 
-  private updatePosition(clientX: number) {
-    this.dist.movement = (this.dist.startX - clientX) * 1.6;
-    return this.dist.finalPosition - this.dist.movement;
+  private calculateSlidePosition(clientX: number) {
+    this.dragState.movement = (this.dragState.startX - clientX) * 1.6;
+    return this.dragState.finalPosition - this.dragState.movement;
   }
 
-  private onStart(event: MouseEvent) {
+  private startDrag(event: MouseEvent) {
     event.preventDefault();
-    this.hasMoved = false;
-    this.dist.startX = event.clientX;
+    this.isDragging = false;
+    this.dragState.startX = event.clientX;
     this.moveListener = this.renderer.listen(
       this.wrapper.nativeElement,
       'mousemove',
-      this.onMove.bind(this)
+      this.handleDragMove.bind(this)
     );
     this.transition(false);
   }
 
-  private onMove(event: MouseEvent) {
-    this.hasMoved = true;
+  private handleDragMove(event: MouseEvent) {
+    this.isDragging = true;
     const pointerPosition = event.clientX;
-    const finalPosition = this.updatePosition(pointerPosition);
-    this.moveSlide(finalPosition);
+    const finalPosition = this.calculateSlidePosition(pointerPosition);
+    this.updateSlidePosition(finalPosition);
   }
 
-  private onEnd() {
+  private endDrag() {
     // Limpando Listener
     this.moveListener();
 
-    if (this.hasMoved) {
-      this.dist.finalPosition = this.dist.movePosition;
-      this.transition(true);
-      this.changeSlideOnEnd();
-    }
+    if (!this.isDragging) return;
 
-    this.hasMoved = false;
+    this.dragState.finalPosition = this.dragState.movePosition;
+    this.transition(true);
+    this.handleSlideChangeAfterDrag();
+
+    this.isDragging = false;
   }
 
-  private changeSlideOnEnd() {
-    if (this.dist.movement > 120 && this.index.next !== undefined)
-      this.activeNextSlide();
-    else if (this.dist.movement < 120 && this.index.prev !== undefined)
-      this.activePrevSlide();
-    else this.changeSlide(this.index.active);
+  private handleSlideChangeAfterDrag() {
+    if (
+      this.dragState.movement > MOVEMENT_THRESHOLD &&
+      this.currentIndices.next !== undefined
+    )
+      this.nextSlide();
+    else if (
+      this.dragState.movement < MOVEMENT_THRESHOLD &&
+      this.currentIndices.prev !== undefined
+    )
+      this.previousSlide();
+    else this.updateActiveSlide(this.currentIndices.active);
   }
 
-  private bindEvents() {
-    Array.from(this.control).forEach((el, i) => {
-      const element = el as HTMLElement;
-      this.controlNav(element, i);
-    });
-    this.renderer.listen(
-      this.wrapper.nativeElement,
-      'mousedown',
-      this.onStart.bind(this)
-    );
-    this.renderer.listen(document, 'mouseup', this.onEnd.bind(this));
+  private updateActiveSlide(index: number) {
+    const activeSlide = this.slides[index];
+
+    this.updateSlideVisuals(index);
+    this.transition(true);
+    this.updateSlidePosition(activeSlide.position);
+    this.updateSlideIndices(index);
+    this.dragState.finalPosition = activeSlide.position;
   }
 
   private slidePosition(slide: HTMLDivElement) {
@@ -130,60 +218,36 @@ export class CarouselComponent implements AfterViewInit {
     return -(slide.offsetLeft - margin);
   }
 
-  private slidesConfig() {
-    this.slideArray = [...this.content].map((el) => {
-      const position = this.slidePosition(el as HTMLDivElement);
-      return { position, element: el as HTMLDivElement };
-    });
-  }
-
-  private slidesIndexNav(index: number) {
-    const last = this.slideArray.length - 1;
-    this.index = {
+  private updateSlideIndices(index: number) {
+    const last = this.slides.length - 1;
+    this.currentIndices = {
       prev: index ? index - 1 : undefined,
       active: index,
       next: index === last ? undefined : index + 1,
     };
   }
 
-  private changeSlide(index: number) {
-    const activeSlide = this.slideArray[index];
-    this.slideArray.forEach((slide) => (slide.element.style.opacity = '50%'));
-    Array.from(this.control).forEach((c) => {
-      const el = c as HTMLElement;
-      el.style.opacity = '50%';
-      el.style.scale = '1';
+  private updateSlideVisuals(activeIndex: number): void {
+    // Atualiza slides
+    this.slides.forEach((slide, index) => {
+      slide.element.style.opacity = index === activeIndex ? '100%' : '50%';
     });
-    activeSlide.element.style.opacity = '100%';
-    (this.control[index] as HTMLElement).style.opacity = '100%';
-    (this.control[index] as HTMLElement).style.scale = '1.2';
-    this.transition(true);
-    this.moveSlide(activeSlide.position);
-    this.slidesIndexNav(index);
-    this.dist.finalPosition = activeSlide.position;
-  }
 
-  private addResizeEvent() {
-    fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => {
-        this.slidesConfig();
-        this.changeSlide(this.index.active);
-      });
-  }
-
-  activePrevSlide() {
-    if (this.index.prev !== undefined) this.changeSlide(this.index.prev);
-  }
-
-  activeNextSlide() {
-    if (this.index.next !== undefined) this.changeSlide(this.index.next);
-  }
-
-  controlNav(item: HTMLElement, index: number) {
-    this.renderer.listen(item, 'click', (event: MouseEvent) => {
-      event.preventDefault();
-      this.changeSlide(index);
+    // Atualiza controles
+    Array.from(this.controls).forEach((control, index) => {
+      const el = control as HTMLElement;
+      el.style.opacity = index === activeIndex ? '100%' : '50%';
+      el.style.scale = index === activeIndex ? '1.2' : '1';
     });
+  }
+
+  previousSlide() {
+    if (this.currentIndices.prev !== undefined)
+      this.updateActiveSlide(this.currentIndices.prev);
+  }
+
+  nextSlide() {
+    if (this.currentIndices.next !== undefined)
+      this.updateActiveSlide(this.currentIndices.next);
   }
 }
