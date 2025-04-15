@@ -87,7 +87,6 @@ export class CadastrarProdutoComponent {
       this.productForm.getRawValue() as IRegisterProduct;
     productData.status = convertStatusToEnglish(productData.status);
     this.loading = true;
-    console.log(productData);
 
     this.registerProductService
       .registerProduct(productData, this.photoList)
