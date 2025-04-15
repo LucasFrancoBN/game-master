@@ -7,7 +7,7 @@
             @if(type === "textarea") {
                 <textarea nz-input [name]="id" [id]="id" [formControl]="formControl"></textarea>
             } @else {
-                <input nz-input [type]="type" [name]="id" [id]="id" [formControl]="formControl" [placeholder]="placeholder" /> 
+                <input nz-input [type]="type" [name]="id" [id]="id" [formControl]="formControl" [placeholder]="placeholder ? placeholder : ''" /> 
             }
         </nz-form-control>
     </nz-form-item>

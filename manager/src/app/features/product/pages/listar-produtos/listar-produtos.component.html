@@ -10,6 +10,7 @@
     [nzData]="paginationResponse.content" 
     (nzQueryParams)="onQueryParamsChange($event)"
     [nzScroll]="{y: '540px'}"
+    [class]="error ? 'mb-3' : ''"
 >
     <thead>
       <tr>
@@ -28,7 +29,7 @@
     <tbody>
       @for (data of paginationResponse.content; track data.id) {
         <tr>
-          <td>{{ data.name }}</td>
+          <td><a [routerLink]="data.id" class="link">{{ data.name }}</a></td>
           <td>{{ data.amount }}</td>
           <td>{{ formattedPrice(data.price) }}</td>
           <td>{{ data.weight }}</td>
@@ -51,3 +52,13 @@
 <ng-template #loadingRef>
   <app-loading [active]="loading" />
 </ng-template>
+
+@if (error) {
+  <nz-alert
+    nzType="error"
+    nzMessage="Erro"
+    [nzDescription]="error"
+    nzShowIcon
+    class="mb-4"
+  ></nz-alert>
+}

@@ -5,7 +5,7 @@
 
 @heading-color: none;
 
-p, h1 {
+p, h1, h2, h3, h4, h5, h6, figure {
   margin: 0;
 }
 
@@ -51,6 +51,11 @@ p, h1 {
   color: oklch(37.2% 0.044 257.287);
   background-color: oklch(92.9% 0.013 255.508);
 }
+
+.link, .link:hover, .link:focus {
+  all: unset;
+}
+
 
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less

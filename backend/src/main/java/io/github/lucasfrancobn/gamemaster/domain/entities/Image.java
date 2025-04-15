@@ -6,13 +6,14 @@ import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationExcep
 public class Image {
     private String name;
     private String path;
+    private String url;
     private ImageType type;
     private Long size;
 
     public Image() {
     }
 
-    public Image(String name, String path, ImageType type, Long size) {
+    public Image(String name, String path, ImageType type, Long size, String url) {
         if(name.isBlank() || name.length() > 255) {
             throw new DomainValidationException("Nome não pode estar vazio ou maior que 255 caracteres");
         }
@@ -25,6 +26,7 @@ public class Image {
         this.path = path;
         this.type = type;
         this.size = size;
+        this.url = url;
     }
 
     public String getName() {
@@ -41,5 +43,9 @@ public class Image {
 
     public Long getSize() {
         return size;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

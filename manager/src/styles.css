@@ -29,4 +29,8 @@
   .title {
     @apply text-4xl font-secondary text-slate-900;
   }
+
+  .link {
+    @apply text-slate-700! hover:text-slate-500! underline! cursor-pointer!
+  }
 }

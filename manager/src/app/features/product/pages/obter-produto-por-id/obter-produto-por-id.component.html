@@ -1,0 +1,82 @@
+@if (loading) {
+    <app-loading [active]="loading" />
+}
+
+@if (errorMessage) {
+    <nz-alert
+      nzType="error"
+      nzMessage="Erro"
+      [nzDescription]="errorMessage"
+      nzShowIcon
+      class="mb-4"
+    ></nz-alert>
+  }
+
+@if(product) {
+    <nz-tabset>
+        <nz-tab [nzTitle]="infoTitle">
+            <ng-template #infoTitle>
+                <nz-icon nzType="info-circle" nzTheme="outline" />
+                Informações
+            </ng-template>
+            <h1 class="title mb-1!">{{product.name}}</h1>
+            <div class="flex items-center gap-10">  
+                <h2 class="text-3xl text-emerald-700 flex items-center gap-4">
+                    <span>
+                    {{formattedPrice(product.price)}}
+                    </span>
+                    <span [class]="statusClass[product.status]">{{product.status | translateStatus }}</span>
+                </h2>
+                <div class="flex gap-2 items-center justify-between">
+                    <p class="text-neutral-500"> <span class="font-bold">Estoque:</span> <span>{{product.amount}}</span></p>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <p class="text-neutral-500"><span class="font-bold">Peso</span>: <span>{{product.weight}}</span>g</p>
+                </div>
+            </div>
+            <nz-divider></nz-divider>
+            <h2 class="text-2xl mb-1!">Descrição do produto</h2>
+            <p class="text-base text-neutral-600 whitespace-pre-line">{{product.description}}</p>
+        </nz-tab>
+        <nz-tab [nzTitle]="imagesTitle" [nzForceRender]="true" (nzClick)="activeImage = true">
+            <ng-template #imagesTitle>
+                <nz-icon nzType="picture" nzTheme="outline" />
+                Imagens
+            </ng-template>
+            <div [class]="activeImage ? 'opacity-100' : 'opacity-0'">
+                <h1 class="text-3xl mb-4!">Imagens do produto</h1>
+            
+                @if (product.images.length) {
+                    <app-carousel>
+                        @for (image of product.images; track $index) {
+                            <figure control class="w-10 border border-solid border-neutral-200 rounded-full">
+                                <img class="rounded-full" [src]="image.url">
+                            </figure>
+                        }
+                        @for (image of product.images; track $index) {
+                            <div class="grid place-content-center gap-2" content>
+                                <figure>
+                                    <img [src]="image.url" />
+                                </figure>
+                                <div>
+                                    <h2 class="text-xl">Propriedades da imagem</h2>
+                                    <p><span class="font-bold!">Nome:</span> {{image.name}}</p>
+                                    <p class="max-w-[500px] break-all"><span class="font-bold!">Local salvo:</span> {{image.path}}</p>
+                                    <p><span class="font-bold!">Tipo:</span> {{image.type}}</p>
+                                    <p><span class="font-bold!">Tamanho do arquivo:</span> {{image.size}} KB</p>
+                                </div>
+                            </div>
+                        }
+                    </app-carousel>
+                }
+                @else {
+                    <nz-alert
+                    nzType="warning"
+                    nzMessage="Cuidado"
+                    nzDescription="Esse produto não possui imagens."
+                    nzShowIcon
+                  ></nz-alert>
+                }
+            </div>
+        </nz-tab>
+    </nz-tabset>
+}

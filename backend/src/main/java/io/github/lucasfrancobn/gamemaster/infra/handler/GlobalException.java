@@ -2,6 +2,7 @@ package io.github.lucasfrancobn.gamemaster.infra.handler;
 
 import java.time.LocalDateTime;
 
+import io.github.lucasfrancobn.gamemaster.application.exception.product.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -213,20 +214,37 @@ public class GlobalException {
 
         return ResponseEntity.status(status).body(exception);
     }
-    
-    
+
+
     @ExceptionHandler(StorageFileException.class)
     public ResponseEntity<CustomException> handleStorageFileException(
-        StorageFileException ex,
-        HttpServletRequest request
+            StorageFileException ex,
+            HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         CustomException exception = new CustomException(
-            LocalDateTime.now(),
-            status.value(),
-            ex.getMessage(),
-            request.getRequestURI()
+                LocalDateTime.now(),
+                status.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(exception);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<CustomException> handleProductNotFoundException(
+            ProductNotFoundException ex,
+            HttpServletRequest request
+    ) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        CustomException exception = new CustomException(
+                LocalDateTime.now(),
+                status.value(),
+                ex.getMessage(),
+                request.getRequestURI()
         );
 
         return ResponseEntity.status(status).body(exception);

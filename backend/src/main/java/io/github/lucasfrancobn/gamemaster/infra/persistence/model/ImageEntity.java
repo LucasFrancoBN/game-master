@@ -17,6 +17,8 @@ public class ImageEntity {
     private ImageType type;
     @Column(nullable = false)
     private Long size;
+    @Column(nullable = false)
+    private String url;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
