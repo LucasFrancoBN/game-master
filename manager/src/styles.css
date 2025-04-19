@@ -33,4 +33,8 @@
   .link {
     @apply text-slate-700! hover:text-slate-500! underline! cursor-pointer!
   }
+
+  .dropdown {
+    @apply p-4 bg-white shadow-2xl absolute z-10 *:not-last:mb-2;
+  }
 }

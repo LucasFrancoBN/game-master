@@ -5,11 +5,11 @@ import java.util.List;
 import io.github.lucasfrancobn.gamemaster.application.gateway.ImageRepository;
 import io.github.lucasfrancobn.gamemaster.domain.services.FileCleanupService;
 
-public class CleanOrphanFilesUsecase {
+public class CleanOrphanFiles {
     private ImageRepository imageRepository;
     private FileCleanupService fileCleanupService;
     
-    public CleanOrphanFilesUsecase(ImageRepository imageRepository, FileCleanupService fileCleanupService) {
+    public CleanOrphanFiles(ImageRepository imageRepository, FileCleanupService fileCleanupService) {
         this.imageRepository = imageRepository;
         this.fileCleanupService = fileCleanupService;
     }

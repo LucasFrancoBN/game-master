@@ -19,9 +19,6 @@ public class Product {
     private ProductStatus status;
     private final List<Image> images = new ArrayList<>();
 
-    public Product() {
-    }
-
     public Product(
             UUID id,
             String name,
@@ -123,5 +120,14 @@ public class Product {
         if(amount.compareTo(0) < 0)
             throw new DomainValidationException("Quantidade precisa ser maior que 0");
         this.amount = amount;
+    }
+
+    public void updateProduct(Product product) {
+        setPrice(product.getPrice());
+        setAmount(product.getAmount());
+        setDescription(product.getDescription());
+        setName(product.getName());
+        setStatus(product.getStatus());
+        setWeight(product.getWeight());
     }
 }

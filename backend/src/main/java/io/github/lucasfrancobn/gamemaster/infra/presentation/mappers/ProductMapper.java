@@ -4,11 +4,23 @@ import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ImageEntity;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ProductEntity;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.UpdateProductRequest;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.FullProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
 
 public class ProductMapper {
     public static Product toDomain(RegisterProductRequest request) {
+        return new Product(
+                request.name(),
+                request.description(),
+                request.price(),
+                request.weight(),
+                request.status(),
+                request.amount()
+        );
+    }
+
+    public static Product toDomain(UpdateProductRequest request) {
         return new Product(
                 request.name(),
                 request.description(),

@@ -24,16 +24,28 @@
         <th>Preço</th>
         <th>Peso (g)</th>
         <th nzColumnKey="status" [nzFilters]="options" [nzFilterFn]="true">Status</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       @for (data of paginationResponse.content; track data.id) {
-        <tr>
+        <tr class="*:relative!">
           <td><a [routerLink]="data.id" class="link">{{ data.name }}</a></td>
           <td>{{ data.amount }}</td>
           <td>{{ formattedPrice(data.price) }}</td>
           <td>{{ data.weight }}</td>
           <td>{{ data.status | translateStatus }}</td>
+          <td>
+            <div class="group relative">
+              <a>Ações <nz-icon nzType="down" /></a>
+              <ul class="hidden dropdown group-hover:block">
+                <li><a [routerLink]="['..', 'editar-produto', data.id]">Editar produto</a></li>
+                <li><a href="">Editar imagens</a></li>
+                <li><a href="">Adicionar imagem</a></li>
+                <li><a href="">Deletar produto</a></li>
+              </ul>
+            </div>
+          </td>
         </tr>
       }
     </tbody>
