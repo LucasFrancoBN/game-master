@@ -1,0 +1,26 @@
+<h1 class="title">Edtiar produto</h1>
+<app-loading [active]="loading" />
+<form nz-form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-2 gap-3 mb-2">
+        <app-input [label]="'Nome'" [id]="'name'" [control]="productForm.get('name')!" [errorTip]="getError('name')" />
+        <app-select [label]="'Status'" [id]="'status'" [options]="options" [control]="productForm.get('status')!" [errorTip]="getError('status')" />
+    </div>
+    <div class="grid grid-cols-3 gap-3 mb-2">
+        <app-input [label]="'Quantidade em estoque'" [id]="'amount'" [control]="productForm.get('amount')!" [errorTip]="getError('amount')" />
+        <app-input [type]="'number'" [label]="'Preço'" [id]="'price'" [control]="productForm.get('price')!" [errorTip]="getError('price')" />
+        <app-input [label]="'Peso (g)'" [id]="'weight'" [control]="productForm.get('weight')!" [errorTip]="getError('weight')" />
+    </div>
+    <app-input class="mb-3" [type]="'textarea'" [label]="'Descrição'" [id]="'description'" [control]="productForm.get('description')!" [errorTip]="getError('description')" />
+    <app-button [disabled]="invalidForm">
+        <span text class="block! font-secondary text-lg">Editar</span>
+    </app-button>
+</form>
+@if(error) {
+    <nz-alert
+        class="mt-3 whitespace-pre-line"
+        nzType="error"
+        nzMessage="Erro ao cadastrar produto"
+        [nzDescription]="error"
+        nzShowIcon
+    ></nz-alert>
+}

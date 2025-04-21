@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthServiceImpl implements AuthService {
+    @Override
     public User getLoggedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -18,5 +19,11 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isLoggedUserAnAdmin() {
+        User loggedUser = this.getLoggedUser();
+        return loggedUser != null && loggedUser.getRoles().stream().anyMatch(r -> r.getAuthority().equals("ADMIN"));
     }
 }

@@ -5,10 +5,12 @@ import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Paginati
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.GetProductById;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.PaginatedProducts;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.RegisterProduct;
+import io.github.lucasfrancobn.gamemaster.application.usecase.product.UpdateProduct;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import io.github.lucasfrancobn.gamemaster.infra.exception.product.ReadImageException;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.UpdateProductRequest;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.FullProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ProductMapper;
@@ -37,6 +39,7 @@ public class ProductController {
     private final RegisterProduct registerProduct;
     private final PaginatedProducts paginatedProducts;
     private final GetProductById productById;
+    private final UpdateProduct updateProduct;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> registerProduct(
@@ -67,6 +70,7 @@ public class ProductController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String status
     ) {
+        log.info("Starting product listing process.");
         List<ProductStatus> statusList = null;
         if(status != null) {
             String[] statusArray = status.split(";");
@@ -89,7 +93,15 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<FullProduct> getProduct(@PathVariable UUID id) {
+        log.info("Starting get product by id process.");
         Product product = productById.getProductById(id);
         return ResponseEntity.ok(ProductMapper.toFullProduct(product));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable UUID id, @RequestBody UpdateProductRequest request) {
+        log.info("Starting update product process. Id: {} | Product data: {}", id, request);
+        updateProduct.update(id, ProductMapper.toDomain(request));
+        return ResponseEntity.ok().build();
     }
 }

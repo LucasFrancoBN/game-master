@@ -43,6 +43,7 @@ const DEFAULT_PAGE_INDEX = 1;
     TranslateStatusPipe,
     RouterLink,
     NzAlertModule,
+    RouterLink,
   ],
   templateUrl: './listar-produtos.component.html',
 })
