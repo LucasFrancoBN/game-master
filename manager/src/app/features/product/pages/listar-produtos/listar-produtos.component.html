@@ -29,7 +29,7 @@
     </thead>
     <tbody>
       @for (data of paginationResponse.content; track data.id) {
-        <tr class="*:relative!">
+        <tr>
           <td><a [routerLink]="data.id" class="link">{{ data.name }}</a></td>
           <td>{{ data.amount }}</td>
           <td>{{ formattedPrice(data.price) }}</td>
