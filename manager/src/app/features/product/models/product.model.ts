@@ -18,4 +18,5 @@ export interface IProductImage {
   path: string;
   type: ImageType;
   size: number;
+  index: number;
 }

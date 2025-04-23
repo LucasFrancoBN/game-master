@@ -22,5 +22,6 @@ public class ImageEntity {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
+    private Integer index;
 
 }

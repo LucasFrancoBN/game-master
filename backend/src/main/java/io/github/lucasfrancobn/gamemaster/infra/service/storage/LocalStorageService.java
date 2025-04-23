@@ -50,19 +50,20 @@ public class LocalStorageService implements StorageService {
     public List<Image> uploadAllFiles(List<byte[]> files, List<String> fileNames) {
         log.info("Starting upload all files process");
         return IntStream.range(0, files.size())
-                .mapToObj(i -> {
-                    String fileName = generateUniqueFileName(fileNames.get(i));
+                .mapToObj(index -> {
+                    String fileName = generateUniqueFileName(fileNames.get(index));
                     Path path = Paths.get(uploadDir, fileName);
                     try {
                         log.info("Creating image {} at directory {}", fileName, uploadDir);
-                        Files.write(path, files.get(i));
+                        Files.write(path, files.get(index));
                         log.debug("File {} created at {}", fileName, uploadDir);
                         return new Image(
                                 fileName,
                                 path.toAbsolutePath().toString(),
                                 ImageType.fromExtension(fileName.split("\\.")[1]),
-                                (long) files.get(i).length,
-                                this.uploadUrl + "/gamemaster/api/v1/uploads/" + fileName
+                                (long) files.get(index).length,
+                                this.uploadUrl + "/gamemaster/api/v1/uploads/" + fileName,
+                                index
                         );
                     } catch (IOException e) {
                         throw new StorageFileException("Falha ao armazenar o arquivo: " + fileName);

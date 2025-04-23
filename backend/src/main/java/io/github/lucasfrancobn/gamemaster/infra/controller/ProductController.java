@@ -102,6 +102,6 @@ public class ProductController {
     public ResponseEntity<Void> updateProduct(@PathVariable UUID id, @RequestBody UpdateProductRequest request) {
         log.info("Starting update product process. Id: {} | Product data: {}", id, request);
         updateProduct.update(id, ProductMapper.toDomain(request));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
