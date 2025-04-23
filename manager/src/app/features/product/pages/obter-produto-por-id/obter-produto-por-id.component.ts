@@ -53,7 +53,12 @@ export class ObterProdutoPorIdComponent implements OnInit {
       .getProduct(id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (data) => (this.product = data),
+        next: (data) => {
+          const orderedImages = data.images.sort((a, b) => a.index - b.index);
+
+          this.product = data;
+          this.product.images = orderedImages;
+        },
         error: (error: IException) => (this.errorMessage = error.message),
       });
   }

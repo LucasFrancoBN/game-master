@@ -10,7 +10,7 @@ spring:
 
 app:
   upload:
-    dir: ${UPLOAD_DIR:./backend/opt/uploads}
+    dir: ${UPLOAD_DIR:./opt/uploads}
     allowed-extensions: jpg,jpeg,png,webp
     url: http://localhost:8080
   cors:

@@ -1,0 +1,42 @@
+<h1 class="title mb-3!">Editar imagens</h1>
+<app-loading [active]="loading" />
+@if(error) {
+    <nz-alert
+        class="mt-3 whitespace-pre-line"
+        nzType="error"
+        nzMessage="Erro ao obter dados do produto"
+        [nzDescription]="error"
+        nzShowIcon
+    ></nz-alert>
+}
+@if(imageList && !imageList.length) {
+    <nz-alert
+    class="mt-3 whitespace-pre-line"
+    nzType="warning"
+    nzMessage="Atenção"
+    nzDescription="Esse produto não possui imagens"
+    nzShowIcon
+></nz-alert>
+}
+@if(imageList && imageList.length) {
+    <div class="border border-solid rounded-lg border-neutral-200" cdkDropList (cdkDropListDropped)="drop($event)">
+        @for (image of imageList; track image.name) {
+            <div class="grid grid-cols-[64px_1fr] gap-3 not-last:border-b border-solid border-neutral-200 p-3 not-last:mb-3 cursor-move" cdkDrag>
+                <figure class="max-w-16">
+                    <img [src]="image.url">
+                </figure>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p><span class="font-bold">Nome:</span> {{image.name}}</p>
+                        <p><span class="font-bold">Tamanho do arquivo:</span> {{image.size}}KB</p>
+                        <p><span class="font-bold">Tipo:</span> {{image.type}}</p>
+                    </div>
+                    <nz-icon class="cursor-pointer" nzType="delete" nzTheme="twotone" nzTwotoneColor="#c10007" />
+                </div>
+            </div>
+        }
+    </div>
+}
+<app-button (click)="edit()" class="mt-3!" [disabled]="!!(error || !imageList || (imageList && !imageList.length))">
+    <span class="font-secondary text-lg" text>Editar</span>
+</app-button>

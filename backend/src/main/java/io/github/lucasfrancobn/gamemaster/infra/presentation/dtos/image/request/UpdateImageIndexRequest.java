@@ -1,8 +1,8 @@
-package io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.response;
+package io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.request;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
 
-public record FullImage(
+public record UpdateImageIndexRequest(
         String name,
         String path,
         ImageType type,

@@ -3,6 +3,7 @@ import { CadastrarProdutoComponent } from './pages/cadastrar-produto/cadastrar-p
 import { ListarProdutosComponent } from './pages/listar-produtos/listar-produtos.component';
 import { ObterProdutoPorIdComponent } from './pages/obter-produto-por-id/obter-produto-por-id.component';
 import { EditarProdutoComponent } from './pages/editar-produto/editar-produto.component';
+import { EditarImagensComponent } from './pages/editar-imagens/editar-imagens.component';
 
 export const productRoutes: Routes = [
   { path: 'cadastrar-produto', component: CadastrarProdutoComponent },
@@ -11,7 +12,8 @@ export const productRoutes: Routes = [
     children: [
       { path: '', component: ListarProdutosComponent },
       { path: ':id', component: ObterProdutoPorIdComponent },
+      { path: 'editar-produto/:id', component: EditarProdutoComponent },
+      { path: 'editar-imagens/:id', component: EditarImagensComponent },
     ],
   },
-  { path: 'editar-produto/:id', component: EditarProdutoComponent },
 ];

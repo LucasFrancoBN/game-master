@@ -1,5 +1,6 @@
 package io.github.lucasfrancobn.gamemaster.infra.config.bean;
 
+import io.github.lucasfrancobn.gamemaster.application.usecase.image.UpdateImageIndex;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,5 +13,10 @@ public class ImageConfig {
     @Bean
     public CleanOrphanFiles cleanOrphanFilesUsecase(ImageRepository imageRepository, FileCleanupService fileCleanupService) {
         return new CleanOrphanFiles(imageRepository, fileCleanupService);
-    }   
+    }
+
+    @Bean
+    public UpdateImageIndex updateImageIndex(ImageRepository imageRepository) {
+        return new UpdateImageIndex(imageRepository);
+    }
 }
