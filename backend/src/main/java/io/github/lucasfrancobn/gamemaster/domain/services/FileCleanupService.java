@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface FileCleanupService {
     void cleanOrphanFiles(List<String> filename);
+
+    void cleanFileByFilename(String filename);
 }

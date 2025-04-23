@@ -31,7 +31,7 @@
                         <p><span class="font-bold">Tamanho do arquivo:</span> {{image.size}}KB</p>
                         <p><span class="font-bold">Tipo:</span> {{image.type}}</p>
                     </div>
-                    <nz-icon class="cursor-pointer" nzType="delete" nzTheme="twotone" nzTwotoneColor="#c10007" />
+                    <nz-icon (click)="delete(image.name)" class="cursor-pointer" nzType="delete" nzTheme="twotone" nzTwotoneColor="#c10007" />
                 </div>
             </div>
         }

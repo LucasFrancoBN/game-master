@@ -2,7 +2,7 @@ spring:
   application:
     name: gamemaster
   profiles:
-    active: homolog
+    active: dev
   servlet:
     multipart:
       max-file-size: 5MB
