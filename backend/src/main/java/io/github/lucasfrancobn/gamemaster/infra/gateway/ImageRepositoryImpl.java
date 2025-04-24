@@ -41,4 +41,12 @@ public class ImageRepositoryImpl implements ImageRepository {
         List<ImageEntity> imageEntities = images.stream().map(ImageMapper::toEntityWithProduct).toList();
         repositoryJpa.saveAll(imageEntities);
     }
+
+    @Override
+    @Transactional
+    public void delete(Image image) {
+        log.debug("Deleting image: {}", image.getName());
+        ImageEntity entity = ImageMapper.toEntity(image);
+        repositoryJpa.delete(entity);
+    }
 }
