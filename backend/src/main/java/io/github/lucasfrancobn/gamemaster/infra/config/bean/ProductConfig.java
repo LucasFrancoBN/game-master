@@ -1,10 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.infra.config.bean;
 
 import io.github.lucasfrancobn.gamemaster.application.gateway.ProductRepository;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.GetProductById;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.PaginatedProducts;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.RegisterProduct;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.UpdateProduct;
+import io.github.lucasfrancobn.gamemaster.application.usecase.product.*;
 import io.github.lucasfrancobn.gamemaster.domain.services.AuthService;
 import io.github.lucasfrancobn.gamemaster.domain.services.StorageService;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +27,10 @@ public class ProductConfig {
     @Bean
     public UpdateProduct updateProduct(AuthService authService, ProductRepository productRepository) {
         return new UpdateProduct(productRepository, authService);
+    }
+
+    @Bean
+    public AddImageToProduct addImageToProduct(ProductRepository productRepository, StorageService storageService) {
+        return new AddImageToProduct(productRepository, storageService);
     }
 }

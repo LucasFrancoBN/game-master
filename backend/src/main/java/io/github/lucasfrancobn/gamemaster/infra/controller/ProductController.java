@@ -2,10 +2,7 @@ package io.github.lucasfrancobn.gamemaster.infra.controller;
 
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.PaginatedResult;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Pagination;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.GetProductById;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.PaginatedProducts;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.RegisterProduct;
-import io.github.lucasfrancobn.gamemaster.application.usecase.product.UpdateProduct;
+import io.github.lucasfrancobn.gamemaster.application.usecase.product.*;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import io.github.lucasfrancobn.gamemaster.infra.exception.product.ReadImageException;
@@ -40,6 +37,7 @@ public class ProductController {
     private final PaginatedProducts paginatedProducts;
     private final GetProductById productById;
     private final UpdateProduct updateProduct;
+    private final AddImageToProduct addImageToProduct;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> registerProduct(
@@ -102,6 +100,23 @@ public class ProductController {
     public ResponseEntity<Void> updateProduct(@PathVariable UUID id, @RequestBody UpdateProductRequest request) {
         log.info("Starting update product process. Id: {} | Product data: {}", id, request);
         updateProduct.update(id, ProductMapper.toDomain(request));
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> addImageToProduct(@PathVariable UUID id, @RequestPart("images")List<MultipartFile> images) {
+        log.info("Starting add images to product process. Product id: {} | Product images: {}", id, images);
+        List<byte[]> content = images.stream().map(i -> {
+            try {
+                return i.getBytes();
+            } catch (IOException e) {
+                throw new ReadImageException("Falha ao ler as imagens: " + e.getMessage());
+            }
+        }).toList();
+        List<String> filenames = images.stream().map(MultipartFile::getOriginalFilename).toList();
+
+        addImageToProduct.add(id, content, filenames);
+
         return ResponseEntity.noContent().build();
     }
 }

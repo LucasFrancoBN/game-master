@@ -1,0 +1,41 @@
+<h1 class="title mb-3!">Adicionar imagens</h1>
+<app-loading [active]="loading" />
+@if(error) {
+    <nz-alert
+        class="mb-3 whitespace-pre-line"
+        nzType="error"
+        nzMessage="Erro"
+        [nzDescription]="error"
+        nzShowIcon
+    ></nz-alert>
+}
+@if (productImages && productImages.length) {
+    <div class="mb-3">
+        @for (image of productImages; track image.name) {
+            <div class="grid grid-cols-[64px_1fr] gap-3 not-last:border-b border-solid border-neutral-200 p-3 not-last:mb-3">
+                <figure class="max-w-16">
+                    <img [src]="image.url">
+                </figure>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p><span class="font-bold">Nome:</span> {{image.name}}</p>
+                        <p><span class="font-bold">Tamanho do arquivo:</span> {{image.size}}KB</p>
+                        <p><span class="font-bold">Tipo:</span> {{image.type}}</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+} @else if (!error) {
+    <nz-alert
+    class="mb-3 whitespace-pre-line"
+    nzType="warning"
+    nzMessage="Atenção"
+    nzDescription="Esse produto não possui imagens"
+    nzShowIcon
+></nz-alert>
+}
+<app-upload [fileList]="photoList" />
+<app-button (click)="add()" [disabled]="invalidPhotos || loading">
+    <span text class="font-secondary text-xl">Adicionar</span>
+</app-button>

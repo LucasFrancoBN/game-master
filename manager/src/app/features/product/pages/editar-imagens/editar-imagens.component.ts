@@ -58,6 +58,7 @@ export class EditarImagensComponent implements OnInit {
   }
 
   delete(name: string) {
+    this.error = '';
     this.loading = true;
     this.deleteImage
       .delete(name)
@@ -80,6 +81,7 @@ export class EditarImagensComponent implements OnInit {
   }
 
   edit() {
+    this.error = '';
     if (!this.imageList) return;
 
     this.loading = true;
@@ -94,6 +96,7 @@ export class EditarImagensComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<IProductImage[]>) {
+    this.error = '';
     if (!this.imageList) return;
     moveItemInArray(this.imageList, event.previousIndex, event.currentIndex);
     this.imageList.forEach((image, index) => (image.index = index));
