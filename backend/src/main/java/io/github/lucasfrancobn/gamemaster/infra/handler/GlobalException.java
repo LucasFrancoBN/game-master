@@ -2,6 +2,7 @@ package io.github.lucasfrancobn.gamemaster.infra.handler;
 
 import java.time.LocalDateTime;
 
+import io.github.lucasfrancobn.gamemaster.application.exception.product.InvalidProductImageCountException;
 import io.github.lucasfrancobn.gamemaster.application.exception.product.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -250,18 +251,35 @@ public class GlobalException {
         return ResponseEntity.status(status).body(exception);
     }
 
+    @ExceptionHandler(InvalidProductImageCountException.class)
+    public ResponseEntity<CustomException> handleInvalidProductImageCountException(
+            InvalidProductImageCountException ex,
+            HttpServletRequest request
+    ) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        CustomException exception = new CustomException(
+                LocalDateTime.now(),
+                status.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(exception);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomException> handleMethodArgumentNotValidException(
-        MethodArgumentNotValidException ex,
-        HttpServletRequest request
+            MethodArgumentNotValidException ex,
+            HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         ValidationException exception = new ValidationException(
-            LocalDateTime.now(),
-            status.value(),
-            "Dado(s) inválido(s)",
-            request.getRequestURI()
+                LocalDateTime.now(),
+                status.value(),
+                "Dado(s) inválido(s)",
+                request.getRequestURI()
         );
 
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
@@ -269,5 +287,5 @@ public class GlobalException {
         }
 
         return ResponseEntity.status(status).body(exception);
-    }    
+    }
 }
