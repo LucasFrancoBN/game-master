@@ -3,6 +3,7 @@ package io.github.lucasfrancobn.gamemaster.infra.persistence.model;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -19,6 +20,7 @@ public class ImageEntity {
     private Long size;
     @Column(nullable = false)
     private String url;
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;

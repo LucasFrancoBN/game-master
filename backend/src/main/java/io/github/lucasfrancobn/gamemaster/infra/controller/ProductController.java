@@ -3,13 +3,16 @@ package io.github.lucasfrancobn.gamemaster.infra.controller;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.PaginatedResult;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Pagination;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.*;
+import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ProductStatus;
 import io.github.lucasfrancobn.gamemaster.infra.exception.product.ReadImageException;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.request.UpdateImageIndexRequest;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.RegisterProductRequest;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.request.UpdateProductRequest;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.FullProduct;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.product.response.ListProduct;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ImageMapper;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ProductMapper;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
@@ -38,6 +41,8 @@ public class ProductController {
     private final GetProductById productById;
     private final UpdateProduct updateProduct;
     private final AddImageToProduct addImageToProduct;
+    private final UpdateImageIndex updateImageIndex;
+    private final DeleteImage deleteImage;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> registerProduct(
@@ -116,6 +121,22 @@ public class ProductController {
         List<String> filenames = images.stream().map(MultipartFile::getOriginalFilename).toList();
 
         addImageToProduct.add(id, content, filenames);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/image/update-index")
+    public ResponseEntity<Void> updateImageIndex(@PathVariable UUID id, @RequestBody List<UpdateImageIndexRequest> updateImageIndices) {
+        List<Image> images = updateImageIndices.stream().map(ImageMapper::toDomain).toList();
+        log.info("Starting update image indices process");
+        updateImageIndex.updateIndex(id, images);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/image/{name}")
+    public ResponseEntity<Void> deleteImage(@PathVariable UUID id, @PathVariable String name) {
+        this.deleteImage.delete(id, name);
 
         return ResponseEntity.noContent().build();
     }

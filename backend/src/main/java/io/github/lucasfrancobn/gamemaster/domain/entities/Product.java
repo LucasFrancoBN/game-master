@@ -5,9 +5,9 @@ import io.github.lucasfrancobn.gamemaster.domain.entities.validation.product.Lis
 import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Product {
     private UUID id;
@@ -129,5 +129,46 @@ public class Product {
         setName(product.getName());
         setStatus(product.getStatus());
         setWeight(product.getWeight());
+    }
+
+    public void updateImageIndex(List<Image> newImages) {
+        if(newImages == null || newImages.isEmpty())
+            throw new DomainValidationException("Lista de novas imagens está vazia");
+
+        Map<String, Integer> newIndices = newImages.stream().collect(Collectors.toMap(Image::getName, Image::getIndex));
+
+        for (Image image : images) {
+            Integer newIndex = newIndices.get(image.getName());
+            image.updateIndex(newIndex);
+        }
+    }
+
+    public void removeImage(String name) {
+        boolean removed = images.removeIf(image -> image.getName().equals(name));
+
+        if(!removed)
+            throw new DomainValidationException("Imagem não encontrada");
+
+        reorderImages();
+    }
+
+    private void reorderImages() {
+        for (int i = 0; i < images.size(); i++) {
+            images.get(i).updateIndex(i);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", weight=" + weight +
+                ", status=" + status +
+                ", images=" + images +
+                '}';
     }
 }

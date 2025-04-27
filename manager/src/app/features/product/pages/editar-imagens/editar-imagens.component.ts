@@ -61,7 +61,7 @@ export class EditarImagensComponent implements OnInit {
     this.error = '';
     this.loading = true;
     this.deleteImage
-      .delete(name)
+      .delete(this.id, name)
       .pipe(
         catchError((deleteError: IException) => {
           this.message.error(deleteError.message);
@@ -87,7 +87,7 @@ export class EditarImagensComponent implements OnInit {
     this.loading = true;
 
     this.updateImages
-      .update(this.imageList)
+      .update(this.id, this.imageList)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => this.message.success('Imagens editadas com sucesso.'),

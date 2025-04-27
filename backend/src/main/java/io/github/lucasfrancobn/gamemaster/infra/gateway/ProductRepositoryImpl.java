@@ -4,9 +4,11 @@ import io.github.lucasfrancobn.gamemaster.application.gateway.ProductRepository;
 import io.github.lucasfrancobn.gamemaster.application.shared.filter.product.ProductFilter;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.PaginatedResult;
 import io.github.lucasfrancobn.gamemaster.application.shared.pagination.Pagination;
+import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Product;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ProductEntity;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.repository.ProductRepositoryJpa;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ImageMapper;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.mappers.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -59,5 +62,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Optional<Product> findById(UUID id) {
         log.debug("Finding product with id: {}", id);
         return repositoryJpa.findById(id).map(ProductMapper::toDomain);
+    }
+
+    @Override
+    public List<Image> findAllImages() {
+        return repositoryJpa.findAllImages().stream().map(ImageMapper::toDomain).toList();
     }
 }

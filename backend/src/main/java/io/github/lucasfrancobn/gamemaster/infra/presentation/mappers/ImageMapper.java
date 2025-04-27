@@ -1,6 +1,5 @@
 package io.github.lucasfrancobn.gamemaster.infra.presentation.mappers;
 
-import io.github.lucasfrancobn.gamemaster.application.usecase.image.UpdateImageIndex;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.infra.persistence.model.ImageEntity;
 import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.request.UpdateImageIndexRequest;

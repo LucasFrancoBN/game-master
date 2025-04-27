@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.lucasfrancobn.gamemaster.application.usecase.image.CleanOrphanFiles;
+import io.github.lucasfrancobn.gamemaster.application.maintenance.CleanOrphanFiles;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

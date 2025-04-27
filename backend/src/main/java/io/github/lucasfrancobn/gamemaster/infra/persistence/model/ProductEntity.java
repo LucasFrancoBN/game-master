@@ -24,7 +24,7 @@ public class ProductEntity {
     private Integer amount;
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageEntity> images = new ArrayList<>();
 
 }

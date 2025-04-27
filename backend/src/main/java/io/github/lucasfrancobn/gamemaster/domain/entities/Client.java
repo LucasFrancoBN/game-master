@@ -84,4 +84,15 @@ public class Client {
 
         this.scope = scope;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", clientId='" + clientId + '\'' +
+                ", clientSecret='" + clientSecret + '\'' +
+                ", redirectUri='" + redirectUri + '\'' +
+                ", scope='" + scope + '\'' +
+                '}';
+    }
 }
