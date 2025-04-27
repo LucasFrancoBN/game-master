@@ -3,6 +3,7 @@ package io.github.lucasfrancobn.gamemaster.infra.config.bean;
 import io.github.lucasfrancobn.gamemaster.application.gateway.ProductRepository;
 import io.github.lucasfrancobn.gamemaster.application.usecase.product.*;
 import io.github.lucasfrancobn.gamemaster.domain.services.AuthService;
+import io.github.lucasfrancobn.gamemaster.domain.services.FileCleanupService;
 import io.github.lucasfrancobn.gamemaster.domain.services.StorageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,5 +33,15 @@ public class ProductConfig {
     @Bean
     public AddImageToProduct addImageToProduct(ProductRepository productRepository, StorageService storageService) {
         return new AddImageToProduct(productRepository, storageService);
+    }
+
+    @Bean
+    public UpdateImageIndex updateImageIndex(ProductRepository productRepository) {
+        return new UpdateImageIndex(productRepository);
+    }
+
+    @Bean
+    public DeleteImage deleteImage(ProductRepository productRepository, FileCleanupService fileCleanupService) {
+        return new DeleteImage(productRepository, fileCleanupService);
     }
 }

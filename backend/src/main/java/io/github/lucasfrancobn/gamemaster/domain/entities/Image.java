@@ -125,4 +125,17 @@ public class Image {
 
         this.index = index;
     }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", url='" + url + '\'' +
+                ", type=" + type +
+                ", size=" + size +
+                ", index=" + index +
+                ", product=" + product +
+                '}';
+    }
 }

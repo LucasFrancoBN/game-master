@@ -8,11 +8,13 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UpdateImagesService {
-  private baseUrl = `${environment.hostUrl}/gamemastermanager/api/v1/images`;
+  private baseUrl = `${environment.hostUrl}/gamemastermanager/api/v1/products`;
 
   constructor(private readonly http: HttpClient) {}
 
-  update(body: IProductImage[]): Observable<void> {
-    return this.http.put(this.baseUrl, body).pipe(map(() => void 0));
+  update(id: string, body: IProductImage[]): Observable<void> {
+    return this.http
+      .put(`${this.baseUrl}/${id}/image/update-index`, body)
+      .pipe(map(() => void 0));
   }
 }
