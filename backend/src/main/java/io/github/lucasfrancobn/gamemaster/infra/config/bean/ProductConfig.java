@@ -44,4 +44,9 @@ public class ProductConfig {
     public DeleteImage deleteImage(ProductRepository productRepository, FileCleanupService fileCleanupService) {
         return new DeleteImage(productRepository, fileCleanupService);
     }
+
+    @Bean
+    public DeleteProduct deleteProduct(ProductRepository productRepository, FileCleanupService fileCleanupService, AuthService authService) {
+        return new DeleteProduct(productRepository, fileCleanupService, authService);
+    }
 }

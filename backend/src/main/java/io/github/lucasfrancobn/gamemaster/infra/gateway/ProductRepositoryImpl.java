@@ -65,7 +65,18 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Image> findAllImages() {
+        log.debug("Listing all images");
         return repositoryJpa.findAllImages().stream().map(ImageMapper::toDomain).toList();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Product product) {
+        log.trace("Deleting product with id: {}", product.getId());
+        ProductEntity entity = ProductMapper.toEntity(product);
+        repositoryJpa.delete(entity);
+        log.debug("Product deleted successfully");
     }
 }

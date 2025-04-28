@@ -14,6 +14,8 @@ import java.util.UUID;
 public interface ProductRepository {
     void save(Product product);
 
+    void delete(Product product);
+
     List<Image> findAllImages();
 
     PaginatedResult<Product> findAll(Pagination pagination, ProductFilter filter);

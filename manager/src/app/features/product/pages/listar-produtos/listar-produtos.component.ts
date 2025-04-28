@@ -14,11 +14,13 @@ import { ProductStatus } from '../../models/product-status.enum';
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { finalize } from 'rxjs';
+import { catchError, finalize, switchMap, throwError } from 'rxjs';
 import { TranslateStatusPipe } from '../../../../shared/pipes/translate-status.pipe';
 import { IException } from '../../../../shared/exception/exception.type';
 import { RouterLink } from '@angular/router';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { DeleteProductService } from '../../service/delete-product.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface IFilterStatus {
   text: string;
@@ -49,6 +51,8 @@ const DEFAULT_PAGE_INDEX = 1;
 })
 export class ListarProdutosComponent implements OnInit {
   private readonly listProductService = inject(ListProductsService);
+  private readonly deleteProductService = inject(DeleteProductService);
+  private readonly message = inject(NzMessageService);
   private readonly fb = inject(NonNullableFormBuilder);
 
   error = '';
@@ -80,6 +84,30 @@ export class ListarProdutosComponent implements OnInit {
       this.name,
       this.statusFilter
     );
+  }
+
+  delete(id: string) {
+    this.loading = true;
+    this.deleteProductService
+      .delete(id)
+      .pipe(
+        catchError((e: IException) => {
+          this.message.error(e.message);
+
+          return throwError(() => e);
+        }),
+        switchMap(() => {
+          const params = this.createParams(
+            DEFAULT_PAGE_INDEX,
+            DEFAULT_PAGE_SIZE,
+            '',
+            []
+          );
+          return this.listProductService.getProducts(params);
+        }),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe((data) => (this.paginationResponse = data));
   }
 
   searchProducts(page: number, size: number, name: string, status: string[]) {

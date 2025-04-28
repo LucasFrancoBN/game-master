@@ -43,6 +43,7 @@ public class ProductController {
     private final AddImageToProduct addImageToProduct;
     private final UpdateImageIndex updateImageIndex;
     private final DeleteImage deleteImage;
+    private final DeleteProduct deleteProduct;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> registerProduct(
@@ -137,6 +138,13 @@ public class ProductController {
     @DeleteMapping("/{id}/image/{name}")
     public ResponseEntity<Void> deleteImage(@PathVariable UUID id, @PathVariable String name) {
         this.deleteImage.delete(id, name);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
+        deleteProduct.delete(id);
 
         return ResponseEntity.noContent().build();
     }
