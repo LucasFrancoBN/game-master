@@ -41,7 +41,7 @@
                 <li><a [routerLink]="['editar-produto', data.id]">Editar produto</a></li>
                 <li><a [routerLink]="['editar-imagens', data.id]">Editar imagens</a></li>
                 <li><a [routerLink]="['adicionar-imagens', data.id]">Adicionar imagem</a></li>
-                <li><a href="">Deletar produto</a></li>
+                <li><a (click)="delete(data.id)">Deletar produto</a></li>
               </ul>
             </div>
           </td>
