@@ -1,6 +1,7 @@
 package io.github.lucasfrancobn.gamemaster.domain.entities;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
+import io.github.lucasfrancobn.gamemaster.domain.entities.validation.image.UrlValidator;
 import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 public class Image {
@@ -87,8 +88,8 @@ public class Image {
     }
 
     public void setUrl(String url) {
-        if (url == null || url.isBlank() || url.length() > 500) {
-            throw new DomainValidationException("URL não pode ser nula, vazia ou maior que 500 caracteres");
+        if (!UrlValidator.isValid(url)) {
+            throw new DomainValidationException("URL da imagem inválida");
         }
 
         this.url = url;

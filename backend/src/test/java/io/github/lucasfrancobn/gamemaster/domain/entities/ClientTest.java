@@ -5,6 +5,8 @@ import io.github.lucasfrancobn.gamemaster.utils.ClientUtil;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static io.github.lucasfrancobn.gamemaster.utils.ClientUtil.generateClient;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,7 +19,7 @@ public class ClientTest {
         SoftAssertions softly = new SoftAssertions();
 
         softly.assertThat(client).as("client").isNotNull().isInstanceOf(Client.class);
-        softly.assertThat(client.getId()).as("client.id").isNotNull();
+        softly.assertThat(client.getId()).as("client.id").isNotNull().isInstanceOf(UUID.class);
         softly.assertThat(client.getClientId()).as("client.clientId").isNotBlank();
         softly.assertThat(client.getClientSecret()).as("client.clientSecret").isNotBlank();
         softly.assertThat(client.getRedirectUri()).as("client.redirectUri").isNotBlank();

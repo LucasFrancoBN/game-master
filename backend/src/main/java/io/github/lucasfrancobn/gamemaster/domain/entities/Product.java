@@ -5,9 +5,11 @@ import io.github.lucasfrancobn.gamemaster.domain.entities.validation.product.Lis
 import io.github.lucasfrancobn.gamemaster.domain.exception.DomainValidationException;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Product {
     private UUID id;
@@ -28,13 +30,16 @@ public class Product {
             ProductStatus status,
             Integer amount
     ) {
+        if(id == null)
+            throw new DomainValidationException("Id não pode ser nulo");
+
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.weight = weight;
-        this.status = status;
-        this.amount = amount;
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+        setWeight(weight);
+        setStatus(status);
+        setAmount(amount);
     }
 
     public Product(String name, String description, BigDecimal price, Long weight, ProductStatus status, Integer amount) {
@@ -113,6 +118,9 @@ public class Product {
     }
 
     public void setStatus(ProductStatus status) {
+        if(status == null)
+            throw new DomainValidationException("Status não pode ser nulo");
+
         this.status = status;
     }
 

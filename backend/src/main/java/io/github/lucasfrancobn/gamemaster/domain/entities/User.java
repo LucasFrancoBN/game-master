@@ -43,6 +43,7 @@ public class User {
         if (!EmailValidator.isValid(email)) {
             throw new DomainValidationException("E-mail inválido.");
         }
+
         this.email = email;
     }
 
@@ -51,6 +52,9 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if(password == null || password.isBlank())
+            throw new DomainValidationException("A senha não pode ser vazia");
+
         this.password = password;
     }
 

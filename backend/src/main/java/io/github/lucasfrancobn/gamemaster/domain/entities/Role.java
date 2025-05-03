@@ -18,15 +18,15 @@ public class Role {
             throw new DomainValidationException("Id é nulo");
         }
         this.id = id;
-        this.authorityName = authorityName;
-        this.authority = authority;
-        this.description = description;
+        setAuthorityName(authorityName);
+        setAuthority(authority);
+        setDescription(description);
     }
 
     public Role(String authorityName, String authority, String description) {
         setAuthorityName(authorityName);
         setAuthority(authority);
-        this.description = description;
+        setDescription(description);
     }
 
     public UUID getId() {
