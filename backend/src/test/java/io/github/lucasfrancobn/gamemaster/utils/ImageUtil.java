@@ -3,6 +3,7 @@ package io.github.lucasfrancobn.gamemaster.utils;
 import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ImageUtil {
@@ -27,6 +28,45 @@ public class ImageUtil {
                 "https://example.com/banner.png",
                 index
         );
+    }
+
+    public static List<byte[]> generateImageBytes() {
+        return List.of(
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5});
+
+    }
+
+    public static List<byte[]> generateSixImageBytes() {
+        return List.of(
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5},
+                new byte[] {1, 2, 3, 4, 5});
+
+    }
+
+    public static List<String> generateFilenames() {
+        return List.of(
+                "first_filename",
+                "second_filename",
+                "thirty_filename",
+                "fourth_filename",
+                "fifth_filename",
+                "sixth_filename");
+    }
+
+    public static List<String> generateSixFilenames() {
+        return List.of(
+                "first_filename",
+                "second_filename",
+                "thirty_filename",
+                "fourth_filename",
+                "fifth_filename",
+                "sixth_filename");
     }
 
     public static Image generateImageWithEmptyName() {
