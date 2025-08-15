@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class AddImageToProduct {
+    private final static int MAX_ALLOWED = 5;
+
     private final ProductRepository productRepository;
     private final StorageService storageService;
 
@@ -25,13 +27,12 @@ public class AddImageToProduct {
 
         int currentImageCount = product.getImages().size();
         int attemptedToAdd = images.size();
-        int maxAllowed = 5;
 
-        if(currentImageCount >= maxAllowed || currentImageCount + attemptedToAdd > maxAllowed)
+        if(currentImageCount >= MAX_ALLOWED || currentImageCount + attemptedToAdd > MAX_ALLOWED)
             throw new InvalidProductImageCountException(
                     String.format(
                             "Não é possível adicionar %d imagens. Contagem atual de imagens: %d (máximo permitido: %d)",
-                            attemptedToAdd, currentImageCount, maxAllowed
+                            attemptedToAdd, currentImageCount, MAX_ALLOWED
                     )
             );
 
