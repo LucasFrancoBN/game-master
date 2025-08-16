@@ -28,19 +28,36 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalException {
-    
+
     @ExceptionHandler(DomainValidationException.class)
     public ResponseEntity<CustomException> handleDomainValidationException(
-        DomainValidationException ex,
-        HttpServletRequest request
+            DomainValidationException ex,
+            HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         CustomException exception = new CustomException(
-            LocalDateTime.now(),
-            status.value(),
-            ex.getMessage(),
-            request.getRequestURI()
+                LocalDateTime.now(),
+                status.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(exception);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<CustomException> handleIllegalArgumentException(
+            DomainValidationException ex,
+            HttpServletRequest request
+    ) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        CustomException exception = new CustomException(
+                LocalDateTime.now(),
+                status.value(),
+                ex.getMessage(),
+                request.getRequestURI()
         );
 
         return ResponseEntity.status(status).body(exception);
