@@ -2,6 +2,7 @@ package io.github.lucasfrancobn.gamemaster.utils;
 
 import io.github.lucasfrancobn.gamemaster.domain.entities.Image;
 import io.github.lucasfrancobn.gamemaster.domain.entities.enums.ImageType;
+import io.github.lucasfrancobn.gamemaster.infra.presentation.dtos.image.request.UpdateImageIndexRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -67,6 +68,17 @@ public class ImageUtil {
                 "fourth_filename",
                 "fifth_filename",
                 "sixth_filename");
+    }
+
+    public static UpdateImageIndexRequest generateImageIndex() {
+        return new UpdateImageIndexRequest(
+                "image",
+                "image/path",
+                ImageType.PNG,
+                8L,
+                "http://localhost:8080/image",
+                1
+        );
     }
 
     public static Image generateImageWithEmptyName() {
