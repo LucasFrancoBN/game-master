@@ -1,10 +1,10 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { IAccessTokenModel } from '../models/auth/access-token.model';
 import { IUserResponse } from '../models/auth/user-response.model';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class AuthService {
 
   handleRefreshToken(refreshToken: string): Observable<IAccessTokenModel> {
     return this.requestToken(
-      this.getTokenRequestBody(environment.grant_type.code, {
+      this.getTokenRequestBody(environment.grant_type.refresh_token, {
         refresh_token: refreshToken,
       })
     );
@@ -139,5 +139,17 @@ export class AuthService {
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.accessToken);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.expiresIn);
     localStorage.removeItem(this.AUTH_STORAGE_KEYS.refreshToken);
+  }
+
+  getAccessToken() {
+    return localStorage.getItem(this.AUTH_STORAGE_KEYS.accessToken);
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem(this.AUTH_STORAGE_KEYS.refreshToken);
+  }
+
+  getExpiresIn() {
+    return localStorage.getItem(this.AUTH_STORAGE_KEYS.expiresIn);
   }
 }

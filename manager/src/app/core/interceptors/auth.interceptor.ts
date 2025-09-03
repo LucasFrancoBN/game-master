@@ -1,26 +1,48 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { catchError, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (req.url.includes('revoke') || req.url.includes('logout'))
+  if (
+    req.url.includes('revoke') ||
+    req.url.includes('logout') ||
+    req.url.includes('token')
+  )
     return next(req);
 
   const authService = inject(AuthService);
 
-  const accessToken = localStorage.getItem('access_token');
-  const refreshToken = localStorage.getItem('refresh_token');
-  const expiresIn = localStorage.getItem('expires_in');
+  let accessToken = authService.getAccessToken();
+  let refreshToken = authService.getRefreshToken();
+  let expiresIn = authService.getExpiresIn();
 
   if (!accessToken || !refreshToken || !expiresIn) return next(req);
 
-  if (Number(expiresIn) - Date.now() >= 0) {
-    authService.handleRefreshToken(refreshToken).pipe();
+  const isTokenExpired = Date.now() >= Number(expiresIn);
+
+  if (!isTokenExpired) {
+    const clonedReq = req.clone({
+      setHeaders: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    return next(clonedReq);
   }
 
-  const clonedReq = req.clone({
-    setHeaders: { Authorization: `Bearer ${accessToken}` },
-  });
+  return authService.handleRefreshToken(refreshToken).pipe(
+    switchMap(() => {
+      const newAccessToken = authService.getAccessToken();
 
-  return next(clonedReq);
+      if (!newAccessToken) return next(req);
+
+      const clonedReq = req.clone({
+        setHeaders: { Authorization: `Bearer ${newAccessToken}` },
+      });
+
+      return next(clonedReq);
+    }),
+    catchError(() => {
+      return next(req);
+    })
+  );
 };

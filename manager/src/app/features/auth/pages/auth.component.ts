@@ -17,11 +17,11 @@ export class AuthComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((params) => {
-      const code = params.get('code');
-      if (!code) return;
+    const code = this.route.snapshot.queryParamMap.get("code");
 
-      this.authService.handleAccessToken(code).subscribe({
+    if(!code) return;
+
+    this.authService.handleAccessToken(code).subscribe({
         next: () => {
           this.router.navigate(['/home']);
         },
@@ -32,6 +32,5 @@ export class AuthComponent implements OnInit {
             'Ocorreu o seguinte erro ao logar na aplicação: ' + e.message;
         },
       });
-    });
   }
 }
